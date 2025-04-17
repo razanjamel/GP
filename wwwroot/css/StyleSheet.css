@@ -1,0 +1,167 @@
+﻿body {
+}
+body,
+html {
+    height: 100%;
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+.hero {
+    background: url("~/image/background.jpg") no-repeat center center;
+    height: 100vh;
+    position: relative;
+    color: white;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+    .hero h1 {
+        font-size: 50px;
+        font-weight: bold;
+        text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
+    }
+
+    .hero p {
+        font-size: 20px;
+        margin-top: 10px;
+    }
+
+.search-bar {
+    width: 50%;
+    margin-top: 20px;
+}
+
+
+
+/* تنسيق صندوق البحث */
+.input-group {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+    transition: all 0.3s ease;
+}
+
+    /* تخصيص الـ input */
+    .input-group .form-control {
+        padding: 10px;
+        font-size: 1rem;
+        border-radius: 25px 0 0 25px;
+        border: 1px solid #ccc;
+        width: 50%;
+    }
+
+    /* تخصيص الزر */
+    .input-group .btn {
+        padding: 10px 20px;
+        border-radius: 0 25px 25px 0;
+        border: 1px solid #ccc;
+        color: #fff;
+        background-color: #ffc107;
+        font-size: 1.2rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+        /* عند النقر على الـ input أو الـ button */
+        .input-group .form-control:focus,
+        .input-group .btn:focus {
+            transform: scale(1.2);
+            border-color: #007bff;
+            outline: none;
+        }
+
+/* تحسين التنسيق على الشاشات الصغيرة */
+@media (max-width: 576px) {
+    .input-group {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+        .input-group .form-control {
+            width: 100%;
+            border-radius: 25px 25px 0 0;
+        }
+
+        .input-group .btn {
+            width: 100%;
+            border-radius: 0 0 25px 25px;
+        }
+}
+
+.category-card {
+    text-align: center;
+    padding: 15px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+    .category-card img {
+        width: 100%;
+        border-radius: 10px;
+        transition: transform 0.3s ease-in-out;
+    }
+
+    .category-card p {
+        margin-top: 10px;
+        font-size: 18px;
+        font-weight: bold;
+    }
+
+    .category-card:hover {
+        transform: scale(1.1);
+        box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+    }
+
+        .category-card:hover img {
+            transform: scale(1.1);
+        }
+
+/* ✅ تكبير الأقسام */
+.category-card {
+    position: relative;
+    display: block;
+    text-align: center;
+    border-radius: 15px;
+    overflow: hidden;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    width: 100%;
+    height: 250px;
+}
+
+    .category-card img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.3s ease-in-out;
+    }
+
+    .category-card h3 {
+        position: absolute;
+        bottom: 15px;
+        left: 50%;
+        transform: translateX(-50%);
+        color: white;
+        padding: 12px 15px;
+        font-size: 1.5rem;
+        transition: font-size 0.3s ease-in-out;
+        background: none;
+    }
+
+    .category-card:hover {
+        transform: scale(1.15);
+        box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.5);
+    }
+
+        .category-card:hover img {
+            transform: scale(1.2);
+        }
+
+
