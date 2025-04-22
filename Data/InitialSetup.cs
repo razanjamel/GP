@@ -20,6 +20,8 @@ namespace GP.Data
 
             }
         }
+        
+
         public static async Task SeedAdminUserAsync(UserManager<ApplicationUser> userManager)
         {
             // Create default admin user

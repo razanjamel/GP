@@ -1,0 +1,187 @@
+﻿@{
+    ViewData["Title"] = "Abou Us";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>About Us - Al-Fannia Furniture & Decor</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+          rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+          rel="stylesheet" />
+    <link rel="stylesheet" href="CSS/style.css" />
+    <link rel="stylesheet" href="~/CSS/AbouUs.css" />
+    <link rel="stylesheet" href="~/CSS/site.css" />
+ 
+</head>
+<body>
+     <!-- About Us Section -->
+    <div class="about-us">
+        <div class="container" style="color: rgb(253, 249, 249); font-size: 27px">
+            <h2>About Us</h2>
+            <p>
+                Al-Fannia Furniture & Decor is a leading brand in the furniture
+                industry. Our mission is to provide high-quality furniture that
+                combines style and functionality. Our team is dedicated to creating
+                pieces that enhance the comfort and aesthetic of any living space.
+            </p>
+        </div>
+    </div>
+
+    <!-- Services Section -->
+    <div class="services">
+        <div class="container">
+            <h2>Our Services</h2>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="service-card">
+                        <img src="~/image/Service 1.jpg" alt="Service 1" />
+                        <div class="service-content">
+                            <h5>Custom Furniture Design</h5>
+                            <p>Tailored designs that fit your unique style and space.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="service-card">
+                        <img src="~/image/Service 2.jpg" alt="Service 2" />
+                        <div class="service-content">
+                            <h5>Interior Design Consultation</h5>
+                            <p>
+                                Expert advice to create beautiful and functional interiors.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="service-card">
+                        <img src="~/image/Service 3.jpg" alt="Service 3" />
+                        <div class="service-content">
+                            <h5>Furniture Restoration</h5>
+                            <p>
+                                Restoring the beauty and functionality of your vintage
+                                furniture.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Gallery Section -->
+    <div class="gallery d-flex justify-content-center align-items-center"
+         style="height: 50vh">
+        <div class="container text-center">
+            <h2>Gallery</h2>
+            <div class="row">
+                <div class="col-md-4">
+                    <img src="~/image/Gallery Image 1.jpg"
+                         class="img-fluid"
+                         alt="Gallery Image 1" />
+                </div>
+                <div class="col-md-4">
+                    <img src="~/image/Gallery Image 2.jpg"
+                         class="img-fluid"
+                         alt="Gallery Image 2" />
+                </div>
+                <div class="col-md-4">
+                    <img src="~/image/Gallery Image 3.jpg"
+                         class="img-fluid"
+                         alt="Gallery Image 3" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Testimonials Section -->
+    <div class="testimonials">
+        <div class="container">
+            <h2>What Our Clients Say</h2>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="testimonial-card">
+                        <img src="~/image/Client 1.jpg"
+                             alt="Client 1"
+                             style="width: 150px; height: 150px" />
+                        <p>
+                            "The quality of the furniture is amazing! I couldn't be happier
+                            with my purchase."
+                        </p>
+                        <h5>John Doe</h5>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="testimonial-card">
+                        <img src="~/image/Client 2.jpg"
+                             alt="Client 2"
+                             style="width: 150px; height: 150px" />
+                        <p>
+                            "Great service and the designs are just beautiful. Highly
+                            recommend!"
+                        </p>
+                        <h5>Jane Smith</h5>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="testimonial-card">
+                        <img src="~/image/Client 3.jpg"
+                             alt="Client 3"
+                             style="width: 150px; height: 150px" />
+                        <p>
+                            "Their team helped me design my dream home. Exceptional quality
+                            and service!"
+                        </p>
+                        <h5>Sarah Lee</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Map Section -->
+    <div class="map-section style="margin-bottom:120px"">
+        <div class="container">
+            <h2>Our Location</h2>
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3390.564084287037!2d34.46832921501148!3d31.5!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1502e881a54007f7%3A0x6f0f1d8c7d5c075d!2z2KzYsdmI2KfYqSDYp9mE2YXZ!5e0!3m2!1sar!2sus!4v1667051104595!5m2!1sar!2sus"
+                    width="100%"
+                    height="450"
+                    frameborder="0"
+                    style="border: 0; border-radius: 10px"
+                    allowfullscreen=""
+                    aria-hidden="false"
+                    tabindex="0"></iframe>
+        </div>
+    </div>
+
+
+    <!-- Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // التأكد من تحميل المكتبات
+            console.log(
+                "Bootstrap status:",
+                typeof bootstrap !== "undefined" ? "Loaded" : "Not loaded"
+            );
+
+            // حل بديل للقائمة
+            const navbarToggler = document.querySelector(".navbar-toggler");
+            const navbarCollapse = document.querySelector(".navbar-collapse");
+
+            navbarToggler.addEventListener("click", function () {
+                navbarCollapse.classList.toggle("show");
+            });
+        });
+    </script>
+</body>
+</html>
+
+
