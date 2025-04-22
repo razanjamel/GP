@@ -1,13 +1,12 @@
-﻿
-input {
+﻿input {
     border-radius: 8px !important;
 }
 
-input:focus {
-    outline: none !important;
-    box-shadow: 0 0 5px #ff0000 !important;
-    border: 1px solid #ff0000 !important;
-}
+    input:focus {
+        outline: none !important;
+        box-shadow: 0 0 5px #ff0000 !important;
+        border: 1px solid #ff0000 !important;
+    }
 
 .logo-container img {
     max-width: 100%;
@@ -35,8 +34,21 @@ input:focus {
     background-color: white;
 }
 
-.card {
-    margin-top: 150px;
-    margin-bottom: 70px;
+.navbar-nav .nav-link {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: white !important;
+    font-size: 16px;
+    font-family: 'Segoe UI', sans-serif;
+    transition: color 0.3s;
 }
 
+    .navbar-nav .nav-link i {
+        font-size: 18px;
+    }
+
+.card {
+    margin-top: 120px;
+    margin-bottom: 100px;
+}

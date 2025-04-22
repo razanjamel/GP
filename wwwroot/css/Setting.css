@@ -1,0 +1,23 @@
+﻿
+body,
+html {
+    height: 100%;
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+.settings-card {
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+    .settings-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+.bg-custom {
+    background-image: url("path-to-your-image.jpg");
+    background-size: cover;
+    background-position: center;
+}
+

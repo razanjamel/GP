@@ -5,14 +5,21 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace GP.Controllers
 {
-    public class AccountControlle(
-        UserManager<ApplicationUser> userManager,
-        RoleManager<IdentityRole> roleManager,
-        SignInManager<ApplicationUser> signInManager) : Controller
+    public class AccountController : Controller
     {
-        private readonly UserManager<ApplicationUser> userManager = userManager;
-        private readonly RoleManager<IdentityRole> roleManager = roleManager;
-        private readonly SignInManager<ApplicationUser> signInManager = signInManager;
+        private readonly UserManager<ApplicationUser> userManager;
+        private readonly RoleManager<IdentityRole> roleManager;
+        private readonly SignInManager<ApplicationUser> signInManager;
+
+        public AccountController(
+            UserManager<ApplicationUser> userManager, 
+            RoleManager<IdentityRole> roleManager,
+            SignInManager<ApplicationUser> signInManager)
+        {
+            this.userManager = userManager;
+            this.roleManager = roleManager;
+            this.signInManager = signInManager;
+        }
 
         [HttpGet]
         public IActionResult Register()
@@ -91,5 +98,6 @@ namespace GP.Controllers
         {
             return View();
         }
+
     }
 }

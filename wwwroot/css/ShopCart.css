@@ -1,0 +1,41 @@
+﻿
+.img-hover {
+    transition: transform 0.3s ease;
+}
+
+.img-hover:hover {
+    transform: scale(1.3);
+}
+
+.summary-box {
+    border: 2px solid #7c0101;
+    border-radius: 10px;
+    padding: 15px;
+    background-color: white;
+}
+
+/* Payment Section Styles */
+.payment-option {
+    transition: all 0.3s ease;
+    cursor: pointer;
+    text-align: left;
+}
+
+    .payment-option:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 5px 15px rgba(124, 1, 1, 0.1);
+        border-color: #7c0101 !important;
+    }
+
+    .payment-option i {
+        transition: transform 0.5s ease;
+    }
+
+    .payment-option:hover i {
+        transform: scale(1.2) rotate(5deg);
+    }
+
+#paymentMethods {
+    transition: all 0.5s ease;
+}
+
