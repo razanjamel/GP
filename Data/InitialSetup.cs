@@ -40,7 +40,7 @@ namespace GP.Data
                 var result = await userManager.CreateAsync(user, "Admin@123456");
                 if (result.Succeeded)
                 {
-                    await userManager.AddToRoleAsync(user, "admin");
+                    await userManager.AddToRoleAsync(user, "Admin");
                 }
             }
         }

@@ -1,0 +1,79 @@
+﻿@{
+    ViewData["Title"] = "Admin Dashboard";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+        .card-box {
+            border-radius: 20px;
+            padding: 25px;
+        }
+
+            .card-box h5 {
+                font-weight: bold;
+            }
+    </style>
+</head>
+<body>
+    <div class="container-fluid px-0">
+        <div class="row">
+
+            <!-- Main Content -->
+            <div class="col-md-10 dashboard-content">
+                <h2>Welcome back, John Smit!</h2>
+                <div class="card p-4 mb-4 shadow" style="border-radius: 25px; background: linear-gradient(135deg, #7c0101, #f3f0ef); color: white;">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div>
+                            <h4 class="fw-bold">Good Job!</h4>
+                            <p class="mb-0">You have over <strong>20,000</strong> visitors in the last 10 days. Keep it up!</p>
+                        </div>
+                        <div style="font-size: 40px">
+                            <img src="@Url.Content("~/image/shop cart.jpg")" alt="Cart" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mt-4">
+                    <div class="col-md-4">
+                        <div class="bg-white card-box shadow-sm text-center">
+                            <h5>Favorites</h5>
+                            <p>+6.9K</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="bg-white card-box shadow-sm text-center">
+                            <h5>Add to Bag</h5>
+                            <p>+2.4K</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="bg-white card-box shadow-sm text-center">
+                            <h5>Orders</h5>
+                            <p>+1.0K</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-5">
+                    <h4>Recent Sold</h4>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="card shadow-sm">
+                                <img src="@Url.Content("~/image/Sofa 6.jpg")" alt="Product" class="card-img-top" />
+                                <div class="card-body">
+                                    <h6 class="card-title">Modern Sofa</h6>
+                                    <p class="card-text">$1,200 earned</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Add more cards if needed -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

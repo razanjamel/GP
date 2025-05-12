@@ -1,0 +1,102 @@
+﻿@model GP.Models.Category
+
+@{
+    ViewData["Title"] = "Add New Category";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<style>
+    .custom-card {
+        border: none;
+        border-radius: 15px;
+        overflow: hidden;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        background: linear-gradient(135deg, #ffffff 0%, #fef6e4 100%);
+    }
+
+        .custom-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .custom-card .card-title {
+            font-weight: bold;
+            color: #7c0101;
+        }
+
+    .btn-custom {
+        background-color: #7c0101;
+        border: none;
+        color: #fff;
+        transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        border-radius: 30px;
+    }
+
+        .btn-custom:hover {
+            background-color: #f8b400;
+            box-shadow: 0 8px 15px rgba(248, 180, 0, 0.4);
+        }
+
+    .form-control {
+        border-radius: 30px;
+        box-shadow: none;
+        transition: box-shadow 0.3s ease;
+    }
+
+        .form-control:focus {
+            box-shadow: 0 0 5px rgba(248, 180, 0, 0.4);
+        }
+
+    label {
+        font-weight: 600;
+        color: #555;
+        margin-bottom: 0;
+    }
+
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+
+    .validation-message {
+        color: red;
+        font-size: 0.9rem;
+    }
+</style>
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card custom-card p-4">
+                <h3 class="card-title text-center mb-4">Add New Category</h3>
+
+                <form asp-action="Add" method="post" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label asp-for="Name">Category Name</label>
+                        <input asp-for="Name" class="form-control" placeholder="Enter category name" />
+                        <span asp-validation-for="Name" class="validation-message"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Category Image</label>
+                        <input type="file" name="Image" class="form-control" />
+                        @if (ViewData.ModelState["Image"] != null && ViewData.ModelState["Image"].Errors.Count > 0)
+                        {
+                            <span class="text-danger">@ViewData.ModelState["Image"].Errors[0].ErrorMessage</span>
+                        }
+
+                    </div>
+
+                    <div class="form-group text-center mt-4">
+                        <button type="submit" class="btn btn-custom px-5">Add</button>
+                        <a asp-action="Index" class="btn btn-secondary ml-2">Back</a>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

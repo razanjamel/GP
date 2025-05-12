@@ -1,0 +1,131 @@
+﻿@model GP.Models.Category
+
+@{
+    ViewData["Title"] = "Edit Category";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<style>
+    .custom-card {
+        border: none;
+        border-radius: 15px;
+        overflow: hidden;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        background: linear-gradient(135deg, #ffffff 0%, #fef6e4 100%);
+    }
+
+    .custom-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .custom-card .card-title {
+        font-weight: bold;
+        color: #7c0101;
+    }
+
+    .btn-custom {
+        background-color: #7c0101;
+        border: none;
+        color: #fff;
+        transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        border-radius: 30px;
+    }
+
+    .btn-custom:hover {
+        background-color: #f8b400;
+        box-shadow: 0 8px 15px rgba(248, 180, 0, 0.4);
+    }
+
+    .form-control {
+        border-radius: 30px;
+        box-shadow: none;
+        transition: box-shadow 0.3s ease;
+    }
+
+    .form-control:focus {
+        box-shadow: 0 0 5px rgba(248, 180, 0, 0.4);
+    }
+
+    label {
+        font-weight: 600;
+        color: #555;
+        margin-bottom: 0;
+    }
+
+    .form-group {
+        display: flex;
+        align-items: center;
+        margin-bottom: 1.5rem;
+    }
+
+    .form-group label {
+        width: 140px;
+    }
+
+    .input-icon {
+        position: relative;
+        flex: 1;
+    }
+
+    .input-icon i {
+        position: absolute;
+        top: 50%;
+        left: 15px;
+        transform: translateY(-50%);
+        color: #999;
+        pointer-events: none;
+    }
+
+    .input-icon input {
+        padding-left: 40px;
+    }
+</style>
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="card custom-card shadow">
+                <div class="card-body">
+                    <h3 class="card-title text-center mb-4">Edit Category</h3>
+                    <form asp-action="Edit" method="post" enctype="multipart/form-data">
+                        <input type="hidden" asp-for="Id" />
+
+                        <div class="form-group">
+                            <label asp-for="Name">Category Name</label>
+                            <div class="input-icon">
+                                <i class="fas fa-list"></i>
+                                <input asp-for="Name" class="form-control" placeholder="Enter new name" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Current Image</label>
+                            @if (!string.IsNullOrEmpty(Model.ImageUrl))
+                            {
+                                <img src="@Model.ImageUrl" alt="Image" width="150" class="mb-3" />
+                            }
+                        </div>
+
+                        <div class="form-group">
+                            <label>Change Image</label>
+                            <div class="input-icon">
+                                <i class="fas fa-image"></i>
+                                <input type="file" name="Image" class="form-control" />
+                            </div>
+                        </div>
+
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-custom btn-block mt-3">Update</button>
+                            <a asp-action="Index" class="btn btn-secondary mt-3">Back</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

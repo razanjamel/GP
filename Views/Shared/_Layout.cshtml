@@ -5,12 +5,17 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8" />
+    <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - GP</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/GP.styles.css" asp-append-version="true" />
+    <title>furniture system Login_Page</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+          rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+          rel="stylesheet" />
+    <link rel="stylesheet" href="~/CSS/StyleSheet.css" />
+    <link rel="stylesheet" href="~/CSS/site.css" />
+
+
 </head>
 <body>
     <header>
@@ -72,6 +77,14 @@
                                 <a class="nav-link" href="@Url.Action("Login","Account")">Login</a>
                             </li>
                         }
+                        @* 
+                        @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" href="@Url.Action("Index", "UserManagement", new { area = "Admin" })">User Management</a>
+                            </li>
+                        }
+                        *@
 
                     </ul>
                 </div>
@@ -79,9 +92,9 @@
         </nav>
     </header>
     <div class="container">
-        <main role="main" class="pb-3">
+        
             @RenderBody()
-        </main>
+        
     </div>
 
      <footer class="footer">

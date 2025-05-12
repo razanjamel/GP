@@ -1,0 +1,106 @@
+﻿@model IEnumerable<GP.Models.Product>
+
+@{
+    ViewData["Title"] = "Manage Products";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<style>    
+    .product-card {
+        transition: transform 0.3s, box-shadow 0.3s;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        overflow: hidden;
+        margin-bottom: 20px;
+    }
+
+      .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+    .product-img {
+        height: 200px;
+        object-fit: cover;
+        width: 100%;
+    }
+
+    .product-title {
+        font-size: 1.2rem;
+        font-weight: bold;
+        color: #7c0101;
+    }
+
+    .product-price {
+        font-size: 1.1rem;
+        color: #f8b400;
+        font-weight: bold;
+    }
+
+    .btn-custom {
+        background-color: #7c0101;
+        color: white;
+        border: none;
+        transition: background-color 0.3s;
+        width: 48%;
+        padding: 8px;
+        border-radius: 5px;
+    }
+
+        .btn-custom:hover {
+            background-color: #f8b400;
+        }
+
+    .btn-group {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 10px;
+    }
+
+    .section-title {
+        text-align: center;
+        margin-bottom: 40px;
+        font-size: 2.5rem;
+        color: #7c0101;
+        font-weight: bold;
+    }
+
+    .product-description {
+        font-size: 0.9rem;
+        color: #555;
+    }
+
+    .top-button {
+        display: flex;
+        justify-content: end;
+        margin-bottom: 25px;
+    }
+</style>
+<div class="container mt-5 pt-3">
+    <div class="top-button"> <a href="/Admin/Product/Add" class="btn btn-success shadow">+ Add New Product</a> </div>
+    <h2 class="section-title">Product Management</h2>
+    <div class="row">
+        @foreach (var product in Model)
+        {
+            <div class="col-md-4 mb-4">
+                <div class="card product-card">
+                    <img src="@product.ImageUrl" class="card-img-top product-img" alt="@product.Name" />
+                    <div class="card-body">
+                        <h5 class="card-title product-title">@product.Name</h5>
+                        <p class="card-text product-description">@product.Description</p>
+                        <p class="product-price">$@product.Price</p>
+                        <p><strong>Colors:</strong> @product.AvailableColors</p>
+                        <div class="btn-group">
+                            <a href="/Admin/Product/Edit/@product.Id" class="btn btn-custom">Edit</a>
+                            <a href="/Admin/Product/Delete/@product.Id" class="btn btn-danger" onclick="return confirm('Are you sure to delete this product?')">Delete</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+
