@@ -1,0 +1,272 @@
+﻿@model GP.Models.Product
+
+
+@{
+    ViewData["Title"] = "Add Product";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<style>
+    body {
+        background-color: #f5f5f5;
+        font-family: "Segoe UI", sans-serif;
+    }
+
+    .sidebar {
+        height: 100vh;
+        background-color: #7c0101;
+        color: white;
+        padding-top: 30px;
+        border-top-right-radius: 40px;
+        border-bottom-right-radius: 40px;
+        transition: all 0.3s ease-in-out;
+    }
+
+        .sidebar a {
+            color: white;
+            text-decoration: none;
+            display: block;
+            padding: 15px 25px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            border-radius: 0 20px 20px 0;
+            margin-bottom: 5px;
+        }
+
+            .sidebar a:hover {
+                background-color: #7c0101;
+            }
+
+            .sidebar a.active {
+                background-color: #fff;
+                color: #7c0101;
+                font-weight: bold;
+                font-size: 18px;
+                box-shadow: inset 3px 0px 0px #b95757;
+            }
+
+        .sidebar .text-center img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #fff;
+        }
+
+    .content {
+        padding: 40px;
+    }
+
+    .form-box {
+        background-color: #fff;
+        border-radius: 20px;
+        padding: 30px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+
+        .form-box label {
+            font-weight: bold;
+        }
+
+        .form-box button {
+            background-color: #7c0101;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            padding: 10px 20px;
+        }
+
+            .form-box button:hover {
+                background-color: #f8b400;
+            }
+
+    html,
+    body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+    }
+
+    /* استخدام Flexbox لتوزيع المحتوى بحيث يكون الفوتر في الأسفل */
+    body {
+        display: flex;
+        flex-direction: column;
+        background: #f2f2f2;
+    }
+
+    /* حاوية المحتوى الأساسية؛ تأخذ المساحة الباقية من الشاشة */
+    .content-wrapper {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* قسم إضافة التصنيف في منتصف الصفحة أفقياً وعمودياً */
+    .add-product-section {
+        flex: 1; /* لجعل هذا القسم يتمدد ويملأ الفراغ */
+        display: flex;
+        align-items: center; /* توسيط عمودي */
+        justify-content: center; /* توسيط أفقي */
+        padding: 20px;
+    }
+
+    .custom-card {
+        border: none;
+        border-radius: 15px;
+        overflow: hidden;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        background: linear-gradient(135deg, #ffffff 0%, #fef6e4 100%);
+    }
+
+        /* تأثير الرفع والظل عند التحويم على البطاقة */
+        .custom-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+
+    /* تنسيق العناوين والأزرار */
+    .active-header {
+        font-weight: bold;
+        color: #7c0101;
+        text-decoration: none;
+    }
+
+        .active-header:hover {
+            text-decoration: none;
+            color: #b95757;
+        }
+
+    .btn-custom {
+        background-color: #7c0101;
+        border: none;
+        color: #fff;
+        transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        border-radius: 30px;
+    }
+
+        /* تأثير عند التحويم على الزر */
+        .btn-custom:hover {
+            background-color: #f8b400;
+            box-shadow: 0 8px 15px rgba(248, 180, 0, 0.4);
+        }
+
+    /* تنسيق الحقول */
+    .form-control {
+        border-radius: 30px;
+        box-shadow: none;
+        transition: box-shadow 0.3s ease;
+    }
+
+        .form-control:focus {
+            box-shadow: 0 0 5px rgba(248, 180, 0, 0.4);
+        }
+
+    label {
+        font-weight: 600;
+        color: #555;
+        margin-bottom: 0; /* لمنع وجود مسافة كبيرة تحت النص */
+    }
+
+    /* جعل الأيقونة داخل نفس السطر مع الحقل */
+    .form-group {
+        display: flex;
+        align-items: center;
+        margin-bottom: 1.5rem;
+    }
+
+        .form-group label {
+            width: 120px; /* مساحة ثابته لعنصر الـ Label */
+        }
+
+    .input-icon {
+        position: relative;
+        flex: 1; /* لكي يأخذ الحقل بقية المساحة */
+    }
+
+        .input-icon i {
+            position: absolute;
+            top: 50%;
+            left: 15px;
+            transform: translateY(-50%);
+            color: #999;
+            pointer-events: none; /* لجعل الأيقونة غير قابلة للضغط */
+        }
+
+        .input-icon input {
+            padding-left: 40px; /* ترك مساحة للأيقونة */
+        }
+
+    .nonactive-header a {
+        color: #555;
+        font-size: 15px;
+    }
+
+        .nonactive-header a:hover {
+            text-decoration: none;
+            color: black;
+        }
+
+</style>
+<div class="container mt-5 pt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="card custom-card shadow">
+                <div class="card-body">
+                    <h3 class="card-title text-center mb-4">Add Product</h3>
+                    <form asp-action="Add" method="post" enctype="multipart/form-data">
+                        <!-- Product Name -->
+                        <div class="form-group">
+                            <label asp-for="Name">Product Name</label>
+                            <input asp-for="Name" class="form-control" placeholder="Enter product name" />
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+
+                        <!-- Product Photo -->
+                        <div class="form-group">
+                            <label>Product Image</label>
+                            <input type="file" name="Image" class="form-control" />
+                            <span class="text-danger">@ViewData.ModelState["Image"]?.Errors.FirstOrDefault()?.ErrorMessage</span>
+                        </div>
+
+                        <!-- Product Price -->
+                        <div class="form-group">
+                            <label asp-for="Price">Price</label>
+                            <input asp-for="Price" class="form-control" placeholder="Enter price" />
+                            <span asp-validation-for="Price" class="text-danger"></span>
+                        </div>
+
+                        <!-- Product Description -->
+                        <div class="form-group">
+                            <label asp-for="Description">Description</label>
+                            <textarea asp-for="Description" class="form-control" rows="2" placeholder="Product Description"></textarea>
+                            <span asp-validation-for="Description" class="text-danger"></span>
+                        </div>
+
+                        <!-- Product Colors -->
+                        <div class="form-group">
+                            <label asp-for="AvailableColors">Available Colors</label>
+                            <input asp-for="AvailableColors" class="form-control" placeholder="e.g. Red, Blue, Black" />
+                            <span asp-validation-for="AvailableColors" class="text-danger"></span>
+                        </div>
+
+                        <!-- Category -->
+                        <div class="form-group">
+                            <label asp-for="CategoryId">Category</label>
+                                <select asp-for="CategoryId" class="form-control" asp-items="@(new SelectList(ViewBag.Categories, "Id", "Name"))">
+                                <option value="">-- Select Category --</option>
+                            </select>
+                            <span asp-validation-for="CategoryId" class="text-danger"></span>
+                        </div>
+
+                        <button type="submit" class="btn btn-custom btn-block mt-3">Add</button>
+                        <a asp-action="Index" class="btn btn-secondary mt-2">Back</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    }

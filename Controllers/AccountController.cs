@@ -38,7 +38,8 @@ namespace GP.Controllers
                     UserName = model.Email, 
                     Email = model.Email,
                     FirstName = model.FirstName,
-                    LastName = model.LastName
+                    LastName = model.LastName,
+                    EmailConfirmed = true
                 };
                 var result = await userManager.CreateAsync(user, model.password);
                 if (result.Succeeded)
@@ -61,18 +62,30 @@ namespace GP.Controllers
         {
             return View();
         }
-        
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task <IActionResult> Login(LoginViewModel model)
+        public async Task<IActionResult> Login(LoginViewModel model)
         {
-            if (ModelState.IsValid) 
-            { 
-                var result = await signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe,lockoutOnFailure:true);
+            if (ModelState.IsValid)
+            {
+                var result = await signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: true);
+
                 if (result.Succeeded)
                 {
-                    return RedirectToAction("Index", "Home");
+                    var user = await userManager.FindByEmailAsync(model.Email);
+                    var roles = await userManager.GetRolesAsync(user);
+
+                    if (roles.Contains("Admin"))
+                    {
+                        return RedirectToAction("Index", "Dashboard", new { area = "Admin" });
+                    }
+                    else
+                    {
+                        return RedirectToAction("Index", "Home");
+                    }
                 }
+
                 if (result.IsLockedOut)
                 {
                     return RedirectToAction("LockOut");
@@ -85,6 +98,7 @@ namespace GP.Controllers
             }
             return View(model);
         }
+
 
         [HttpPost]
         [ValidateAntiForgeryToken]

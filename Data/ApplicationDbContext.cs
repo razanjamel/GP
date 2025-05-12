@@ -11,5 +11,8 @@ namespace GP.Data
         {
             base.OnModelCreating(builder);
         }
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<Product> Products { get; set; }
+
     }
 } 
