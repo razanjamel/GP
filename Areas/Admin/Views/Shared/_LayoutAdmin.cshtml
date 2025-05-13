@@ -1,4 +1,6 @@
-﻿@* File: _LayoutAdmin.cshtml *@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@* File: _LayoutAdmin.cshtml *@
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -69,7 +71,11 @@
                 <a asp-area="Admin" asp-controller="Product" asp-action="Index">Products</a>
                 <a href="@Url.Action("Index", "UserManagement", new { area = "Admin" })">User Management</a>
                 <a href="#">Settings</a>
-                <a asp-controller="Account" asp-action="Logout">Logout</a>
+                <form asp-area="" asp-controller="Account" asp-action="Logout" method="post" class="px-3">
+                    <button type="submit" class="btn btn-danger w-100 mt-2">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </button>
+                </form>
             </div>
 
             <!-- Main Content -->
