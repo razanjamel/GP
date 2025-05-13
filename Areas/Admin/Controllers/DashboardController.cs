@@ -12,4 +12,5 @@ namespace GP.Areas.Admin.Controllers
             return View();
         }
     }
+
 }

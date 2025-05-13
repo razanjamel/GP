@@ -1,0 +1,146 @@
+﻿@model IEnumerable<GP.Models.Product>
+
+@{
+    ViewData["Title"] = "Products";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    body,
+    html {
+        height: 100%;
+        margin: 0;
+        font-family: Arial, sans-serif;
+    }
+
+
+
+    .footer {
+        background: #7c0101;
+        color: white;
+        text-align: center;
+        padding: 15px 0;
+    }
+
+    .social-icons a {
+        color: white;
+        margin: 0 10px;
+        font-size: 20px;
+        transition: 0.3s;
+    }
+
+        .social-icons a:hover {
+            color: #f8b400;
+        }
+
+    .product-card {
+        transition: transform 0.3s, box-shadow 0.3s;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        overflow: hidden;
+        margin-bottom: 20px; /* تباعد بين البطاقات */
+    }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+    .product-img {
+        height: 200px;
+        object-fit: cover;
+        width: 100%;
+    }
+
+    .product-title {
+        font-size: 1.2rem;
+        font-weight: bold;
+        color: #7c0101;
+    }
+
+    .product-price {
+        font-size: 1.1rem;
+        color: #f8b400;
+        font-weight: bold;
+    }
+
+    .btn-custom {
+        background-color: #7c0101;
+        color: white;
+        border: none;
+        transition: background-color 0.3s;
+        width: 100%;
+        padding: 10px;
+    }
+
+        .btn-custom:hover {
+            background-color: #f8b400;
+        }
+
+    .section-title {
+        text-align: center;
+        margin-bottom: 40px;
+        font-size: 2.5rem;
+        color: #8b4513;
+        font-weight: bold;
+    }
+
+    .product-description {
+        font-size: 0.9rem;
+        color: #555;
+    }
+
+    /* Floating Back Button */
+    .floating-back-btn {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background-color: #7c0101;
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        font-size: 1.2rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        transition: background-color 0.3s, transform 0.3s;
+    }
+
+        .floating-back-btn:hover {
+            background-color: #f8b400;
+            transform: scale(1.1);
+        }
+</style>
+
+<div class="container mt-5 pt-5"> 
+    <h2 class="section-title">Products</h2>
+    <div class="row"> @foreach (var product in Model)
+        {
+            <div class="col-md-4 mb-4"> 
+                <div class="card product-card"> 
+                    <img src="@product.ImageUrl" class="card-img-top product-img" alt="@product.Name" /> 
+                    <div class="card-body"> 
+                        <h5 class="card-title product-title">@product.Name</h5>
+                        <p class="card-text product-description">@product.Description</p>
+                        <p class="product-price">$@product.Price</p>
+                        <div class="d-flex justify-content-between">
+                            <a href="/Home/ProductDetails/@product.Id" class="btn btn-dark">View Details</a>
+                            <form asp-controller="Cart" asp-action="AddToCart" method="post">
+                                <input type="hidden" name="productId" value="@product.Id" />
+                                <button type="submit" class="btn btn-sm text-white px-4" style="background-color: #7c0101;">
+                                    Add to Cart
+                                </button>
+                            </form>
+                        </div>
+
+                    </div>
+                </div> 
+            </div>
+        }
+    </div> 
+ </div>
+
+
