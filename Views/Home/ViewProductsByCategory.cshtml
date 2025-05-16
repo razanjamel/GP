@@ -113,34 +113,72 @@
             background-color: #f8b400;
             transform: scale(1.1);
         }
-</style>
 
-<div class="container mt-5 pt-5"> 
+    .btn:hover{
+        transform: scale(1.1);
+    }
+
+ </style>
+
+<div class="container mt-5 pt-5">
     <h2 class="section-title">Products</h2>
-    <div class="row"> @foreach (var product in Model)
+    <div class="row">
+        @foreach (var product in Model)
         {
-            <div class="col-md-4 mb-4"> 
-                <div class="card product-card"> 
-                    <img src="@product.ImageUrl" class="card-img-top product-img" alt="@product.Name" /> 
-                    <div class="card-body"> 
+            <div class="col-md-4 mb-4">
+                <div class="card product-card">
+                    <img src="@product.ImageUrl" class="card-img-top product-img" alt="@product.Name" />
+                    <div class="card-body">
                         <h5 class="card-title product-title">@product.Name</h5>
                         <p class="card-text product-description">@product.Description</p>
                         <p class="product-price">$@product.Price</p>
+
                         <div class="d-flex justify-content-between">
                             <a href="/Home/ProductDetails/@product.Id" class="btn btn-dark">View Details</a>
-                            <form asp-controller="Cart" asp-action="AddToCart" method="post">
-                                <input type="hidden" name="productId" value="@product.Id" />
-                                <button type="submit" class="btn btn-sm text-white px-4" style="background-color: #7c0101;">
-                                    Add to Cart
-                                </button>
-                            </form>
-                        </div>
 
+                            <button class="btn btn-cart" style="background-color: #7c0101; color:white;" onclick="addToCart(@product.Id, this)">Add to Cart</button>
+                        </div>
                     </div>
-                </div> 
+                </div>
             </div>
         }
-    </div> 
- </div>
+    </div>
+</div>
+
+@section Scripts {
+    @Html.AntiForgeryToken()
+
+    <script>
+        function addToCart(productId, button) {
+            const token = document.querySelector('input[name="__RequestVerificationToken"]')?.value;
+
+            fetch('/Cart/AddToCart', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'RequestVerificationToken': document.querySelector('input[name="__RequestVerificationToken"]').value
+                },
+                body: JSON.stringify({ productId: productId, quantity: 1 })
+            })
+            .then(response => {
+                if (response.ok) {
+                    // إشعار
+                    const original = button.innerHTML;
+                    button.innerHTML = "✔️ Added!";
+                    setTimeout(() => {
+                        button.innerHTML = original;
+                    }, 2000);
+                } else {
+                        alert("❌ Failed to add product, Please log in to the site.");
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert("⚠️ Error occurred.");
+            });
+        }
+    </script>
+}
+
 
 

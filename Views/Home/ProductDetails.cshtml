@@ -4,7 +4,69 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<style>    .hover-effect {
+<style>
+    .hover-effect {
+        font-size: 24px;
+        color: #000;
+        transition: all 0.3s ease;
+    }
+
+        .hover-effect:hover {
+            font-size: 28px;
+            color: #A68A6D;
+        }
+
+    .color-circle {
+        width: 25px;
+        height: 25px;
+        border-radius: 50%;
+        display: inline-block;
+        margin-right: 5px;
+        border: 2px solid #000;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+        .color-circle.selected {
+            transform: scale(1.3);
+            border-color: #A68A6D;
+        }
+
+    .product-img {
+        max-width: 100%;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+
+    .quantity-box {
+        display: flex;
+        align-items: center;
+        border: 2px solid #000;
+        border-radius: 5px;
+        width: 120px;
+        overflow: hidden;
+    }
+
+        .quantity-box button {
+            width: 30px;
+            height: 35px;
+            font-size: 18px;
+            font-weight: bold;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+        }
+
+        .quantity-box .quantity-input {
+            width: 40px;
+            height: 35px;
+            text-align: center;
+            font-size: 18px;
+            border: none;
+            outline: none;
+        }
+
+    .hover-effect {
         font-size: 24px;
         color: #000;
         transition: all 0.3s ease;
@@ -68,12 +130,14 @@
             <h2 class="hover-effect fs-1 fw-bold">@Model.Name</h2>
             <div class="mb-3">
                 <strong>Available Colors:</strong>
-                @foreach (var color in (Model.AvailableColors ?? "").Split(',', StringSplitOptions.RemoveEmptyEntries))
-                {
-                    <span class="color-circle" style="background-color:@color.Trim();"></span>
-                }
+                <div id="colorOptions">
+                    @foreach (var color in (Model.AvailableColors ?? "").Split(',', StringSplitOptions.RemoveEmptyEntries))
+                    {
+                        <span class="color-circle" style="background-color:@color.Trim();" data-color="@color.Trim()"></span>
+                    }
+                </div>
             </div>
-            <h4>Price: <span class="text-success">$@Model.Price</span></h4>
+            <h4>Price: <span class="text-success">$@Model.Price.ToString("0.00")</span></h4>
             <p>Includes VAT</p>
             <div class="d-flex mb-3">
                 <div class="quantity-box m-1">
@@ -81,14 +145,10 @@
                     <input type="text" class="quantity-input" value="1" />
                     <button class="plus-btn">+</button>
                 </div>
-                <form asp-controller="Cart" asp-action="AddToCart" method="post">
-                    <input type="hidden" name="productId" value="@Model.Id" />
-                    <input type="hidden" name="quantity" class="cart-quantity" value="1" />
-                    <button type="submit" class="btn btn-dark">Add to Cart</button>
-                </form>
+                <button class="btn btn-dark" style="width: 250px;" onclick="addToCart(@Model.Id)">Add to Cart</button>
             </div>
             <div style="font-size: 20px;">
-                <h5>Description</h5>
+                <h5 style="font-weight: bold;">Description</h5>
                 <p>@Model.Description</p>
             </div>
         </div>
@@ -96,22 +156,60 @@
 </div>
 
 @section Scripts {
-
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             const minusBtn = document.querySelector(".minus-btn");
             const plusBtn = document.querySelector(".plus-btn");
             const quantityInput = document.querySelector(".quantity-input");
-            const hiddenQuantity = document.querySelector(".cart-quantity");
+            const colorCircles = document.querySelectorAll('.color-circle');
+
             minusBtn.addEventListener("click", function () {
                 let value = parseInt(quantityInput.value);
-                if (value > 1) { quantityInput.value = value - 1; hiddenQuantity.value = value - 1; }
+                if (value > 1) {
+                    quantityInput.value = value - 1;
+                }
             });
+
             plusBtn.addEventListener("click", function () {
                 let value = parseInt(quantityInput.value);
                 quantityInput.value = value + 1;
-                hiddenQuantity.value = value + 1;
+            });
+
+            colorCircles.forEach(circle => {
+                circle.addEventListener('click', function () {
+                    colorCircles.forEach(c => c.classList.remove('selected'));
+                    this.classList.add('selected');
+                });
             });
         });
+
+        function addToCart(productId) {
+            const quantity = parseInt(document.querySelector('.quantity-input')?.value || 1);
+            const selectedColor = document.querySelector('.color-circle.selected')?.dataset.color || 'Black';
+
+            fetch('/Cart/AddToCart', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'RequestVerificationToken': document.querySelector('input[name="__RequestVerificationToken"]').value
+                },
+                body: JSON.stringify({
+                    productId: productId,
+                    quantity: quantity,
+                    selectedColor: selectedColor
+                })
+            })
+                .then(response => {
+                    if (response.ok) {
+                        alert("✅ Product added to cart with color: " + selectedColor);
+                    } else {
+                        alert("❌ Failed to add product, Please log in.");
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert("⚠️ Error occurred.");
+                });
+        }
     </script>
 }
