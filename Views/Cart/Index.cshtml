@@ -1,0 +1,180 @@
+﻿@model List<GP.Models.CartItem>
+@{
+    ViewData["Title"] = "Shopping Cart";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewData["Title"]</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+    <style>
+        .img-hover {
+            transition: transform 0.3s ease;
+        }
+
+            .img-hover:hover {
+                transform: scale(1.3);
+            }
+
+        .summary-box {
+            border: 2px solid #7c0101;
+            border-radius: 10px;
+            padding: 15px;
+            background-color: white;
+        }
+
+        .payment-option {
+            transition: all 0.3s ease;
+            cursor: pointer;
+            text-align: left;
+        }
+
+            .payment-option:hover {
+                transform: translateY(-3px);
+                box-shadow: 0 5px 15px rgba(124, 1, 1, 0.1);
+                border-color: #7c0101 !important;
+            }
+
+            .payment-option i {
+                transition: transform 0.5s ease;
+            }
+
+            .payment-option:hover i {
+                transform: scale(1.2) rotate(5deg);
+            }
+
+        #paymentMethods {
+            transition: all 0.5s ease;
+        }
+
+
+
+        .summary-box {
+            border: 2px solid #7c0101;
+            border-radius: 10px;
+            padding: 15px;
+            background-color: white;
+        }
+
+        .img-hover {
+            transition: transform 0.3s ease;
+        }
+
+            .img-hover:hover {
+                transform: scale(1.1);
+            }
+
+        .remove-btn {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+
+            .remove-btn:hover {
+                background-color: #a71d2a;
+            }
+
+        /* Payment Section Styles */
+        .payment-option {
+            transition: all 0.3s ease;
+            cursor: pointer;
+            text-align: left;
+        }
+
+            .payment-option:hover {
+                transform: translateY(-3px);
+                box-shadow: 0 5px 15px rgba(124, 1, 1, 0.1);
+                border-color: #7c0101 !important;
+            }
+
+            .payment-option i {
+                transition: transform 0.5s ease;
+            }
+
+            .payment-option:hover i {
+                transform: scale(1.2) rotate(5deg);
+            }
+
+        #paymentMethods {
+            transition: all 0.5s ease;
+        }
+
+        .summary-box {
+            border: 2px solid #7c0101;
+            border-radius: 10px;
+            padding: 15px;
+            background-color: white;
+        }
+
+        .img-hover {
+            transition: transform 0.3s ease;
+        }
+
+            .img-hover:hover {
+                transform: scale(1.3);
+    </style>
+</head>
+<body class="bg-light">
+    <div class="container" style="margin-top: 120px">
+        <div class="row">
+            <div class="col-lg-8">
+                <h2 class="fs-1 fw-bold" style="color: #7c0101">🛍 Shop Cart</h2>
+                <a href="/Checkout">
+                    <button class="btn btn-lg w-100 my-3 fw-bold" style="background-color: #7c0101; color: aliceblue">
+                        🛒 Continue to Purchase
+                    </button>
+                </a>
+                <h4 class="text-danger">Summary of Request</h4>
+                <div id="cart-items">
+                    @foreach (var item in Model)
+                    {
+                        <div class="summary-box rounded shadow-sm p-3 my-3 bg-white d-flex align-items-center cart-item" data-id="@item.Id" data-price="@item.Product?.Price" data-quantity="@item.Quantity">
+                            <div class="me-3">
+                                <img src="@item.Product?.ImageUrl" class="img-hover img-fluid rounded img-thumbnail" alt="@item.Product?.Name" style="width: 120px;" />
+                            </div>
+                            <div>
+                                <h5 class="text-dark">@item.Product?.Name</h5>
+                                <p class="text-secondary mb-1">Price: <span class="fw-bold">$@item.Product?.Price</span></p>
+                                <p class="text-secondary mb-1">Number: <span class="product-quantity fw-bold">@item.Quantity</span></p>
+                                <p class="text-secondary mb-1">Color: <span class="fw-bold">@item.SelectedColors</span></p>
+                                <form asp-action="Remove" asp-controller="Cart" method="post" class="d-inline">
+                                    <input type="hidden" name="id" value="@item.Id" />
+                                    <button type="submit" class="btn btn-sm btn-danger mt-2">
+                                        <i class="fas fa-trash"></i> Remove
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    }
+                </div>
+                <h4 class="total-price-container fw-bold">
+                    Total Price: <span id="total-price">$0</span>
+                </h4>
+            </div>
+            <div class="col-lg-4 text-center">
+                <img src="/image/shop cart.jpg" class="img-hover img-fluid rounded shadow" alt="Shopping Cart" style="width: 350px; margin-top: 140px" />
+            </div>
+        </div>
+    </div>
+
+    @section Scripts {
+        <script>
+            function calculateTotal() {
+                let total = 0;
+                document.querySelectorAll('.cart-item').forEach(item => {
+                    const price = parseFloat(item.dataset.price);
+                    const quantity = parseInt(item.dataset.quantity);
+                    total += price * quantity;
+                });
+                document.getElementById('total-price').innerText = `$${total.toFixed(2)}`;
+            }
+            document.addEventListener("DOMContentLoaded", calculateTotal);
+        </script>
+    }
+</body>
+</html>
