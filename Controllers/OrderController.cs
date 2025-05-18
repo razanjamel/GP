@@ -58,7 +58,7 @@ namespace GP.Controllers
             _context.Orders.Add(order);
             await _context.SaveChangesAsync();
 
-            TempData["SuccessMessage"] = "✔️ Your order has been placed successfully!";
+            TempData["SuccessMessage"] = "Your order has been placed successfully!";
             return RedirectToAction("MyOrders", "Order");
         }
         public async Task<IActionResult> MyOrders()
