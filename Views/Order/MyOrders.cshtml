@@ -1,0 +1,373 @@
+﻿@model IEnumerable<GP.Models.Order>
+
+@{
+    ViewData["Title"] = "My Orders";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    :root {
+        --primary-color: #7c0101;
+        --accent-color: #7c0101;
+        --secondary-color: #d1a095;
+    }
+
+    .order-card {
+        border-left: 4px solid var(--primary-color);
+        border-radius: 10px;
+        margin-bottom: 20px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        transition: all 0.3s ease;
+    }
+
+        .order-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+
+    .order-header {
+        background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+        color: white;
+        padding: 15px;
+        font-weight: bold;
+    }
+
+    .order-body {
+        background: white;
+        padding: 20px;
+    }
+
+    .order-status {
+        font-weight: bold;
+        padding: 5px 15px;
+        border-radius: 30px;
+    }
+
+    .status-pending {
+        background-color: #fff3cd;
+        color: #7c0101;
+    }
+
+    .status-complete {
+        background-color: #d4edda;
+        color: #155724;
+    }
+
+    .status-cancelled {
+        background-color: #f8d7da;
+        color: #721c24;
+    }
+
+    .section-title {
+        color: var(--primary-color);
+        font-weight: bold;
+        margin-top: 80px;
+        margin-bottom: 30px;
+    }
+          :root {
+        --primary-color: #7c0101; /* SaddleBrown */
+        --secondary-color: #d1a095; /* Tan */
+        --accent-color: #7c0101; /* Sienna */
+        --light-color: #f5f5dc; /* Beige */
+      }
+
+      body {
+        font-family: "Montserrat", sans-serif;
+        background-color: #f8f9fa;
+        color: #333;
+        padding-bottom: 80px;
+      }
+
+      .order-card {
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+        overflow: hidden;
+        margin-bottom: 20px;
+        border-left: 4px solid var(--primary-color);
+      }
+
+      .order-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+      }
+
+      .order-header {
+        background: linear-gradient(
+          135deg,
+          var(--primary-color),
+          var(--accent-color)
+        );
+        color: white;
+        padding: 15px;
+      }
+
+      .order-body {
+        background: white;
+        padding: 20px;
+      }
+
+      .order-product-img {
+        width: 80px;
+        height: 80px;
+        object-fit: cover;
+        border-radius: 5px;
+        border: 1px solid #eee;
+      }
+      .navbar {
+        background: #7c0101 !important;
+      }
+      .navbar .nav-link,
+      .navbar-brand {
+        color: white !important;
+        font-weight: bold;
+      }
+      .navbar .nav-link:hover {
+        color: #f8b400 !important;
+      }
+
+      .order-status {
+        display: inline-block;
+        padding: 5px 10px;
+        border-radius: 20px;
+        font-weight: bold;
+      }
+
+      .status-processing {
+        background-color: #fff3cd;
+        color: #7c0101;
+      }
+
+      .status-shipped {
+        background-color: #d1ecf1;
+        color: #0c5460;
+      }
+
+      .status-delivered {
+        background-color: #d4edda;
+        color: #155724;
+      }
+
+      .status-cancelled {
+        background-color: #f8d7da;
+        color: #721c24;
+      }
+
+      .tracking-steps {
+        position: relative;
+        padding-left: 30px;
+        margin-top: 20px;
+      }
+
+      .tracking-steps::before {
+        content: "";
+        position: absolute;
+        left: 10px;
+        top: 0;
+        bottom: 0;
+        width: 2px;
+        background-color: #e9ecef;
+      }
+
+      .step {
+        position: relative;
+        margin-bottom: 15px;
+      }
+
+      .step::before {
+        content: "";
+        position: absolute;
+        left: -30px;
+        top: 5px;
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background-color: #adb5bd;
+      }
+
+      .step.active::before {
+        background-color: var(--primary-color);
+      }
+
+      .step.completed::before {
+        background-color: var(--accent-color);
+      }
+
+      .step.completed .step-text {
+        color: var(--accent-color);
+      }
+
+      .step.active .step-text {
+        color: var(--primary-color);
+        font-weight: bold;
+      }
+
+      .btn-view-details {
+        background-color: var(--secondary-color);
+        color: white;
+        border: none;
+        transition: all 0.3s ease;
+      }
+
+      .btn-view-details:hover {
+        background-color: var(--accent-color);
+        transform: translateY(-2px);
+      }
+
+      .section-title {
+        color: var(--primary-color);
+        position: relative;
+        padding-bottom: 10px;
+        margin-bottom: 20px;
+      }
+
+      .section-title::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 50px;
+        height: 3px;
+        background-color: var(--secondary-color);
+      }
+
+      /* Animation classes */
+      .fade-in {
+        animation: fadeIn 0.8s ease-in;
+      }
+
+      @@keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      .floating-back-btn {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background-color: #7c0101;
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        font-size: 1.2rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        transition: background-color 0.3s, transform 0.3s;
+      }
+
+      .floating-back-btn:hover {
+        background-color: #f8b400;
+        transform: scale(1.1);
+      }
+      .footer {
+        background: #7c0101;
+        color: white;
+        text-align: center;
+        padding: 15px 0;
+        width: 100%;
+        box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+        z-index: 999;
+      }
+
+      .social-icons a {
+        color: white;
+        margin: 0 10px;
+        font-size: 20px;
+        transition: 0.3s;
+      }
+
+      .social-icons a:hover {
+        color: #f8b400;
+      }
+</style>
+
+<div class="container">
+    <h2 class="section-title">🧾 My Orders</h2>
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success text-center fw-bold mb-3">
+            @TempData["SuccessMessage"]
+        </div>
+    }
+
+
+    <!-- Filter & Search -->
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <input id="orderSearch" type="text" class="form-control" placeholder="Search by name, address, phone..." />
+        </div>
+        <div class="col-md-4 offset-md-2">
+            <select id="statusFilter" class="form-select">
+                <option value="">All Orders</option>
+                <option value="Pending">Pending</option>
+                <option value="Delivered">Delivered</option>
+                <option value="Cancelled">Cancelled</option>
+            </select>
+        </div>
+    </div>
+
+
+    @if (!Model.Any())
+    {
+        <div class="alert alert-info text-center">You have no orders yet.</div>
+    }
+    else
+    {
+        <div id="ordersContainer">
+            @foreach (var order in Model)
+            {
+                <div class="order-card" data-status="@order.Status" data-search="@($"{order.Id} {order.FullName} {order.Address} {order.PhoneNumber}")">
+                    <div class="order-header d-flex justify-content-between">
+                        <span>Order #@order.Id</span>
+                        <span class="order-status status-@order.Status?.ToLower()"> @order.Status </span>
+                    </div>
+                    <div class="order-body">
+                        <p><strong>Full Name:</strong> @order.FullName</p>
+                        <p><strong>Address:</strong> @order.Address</p>
+                        <p><strong>Phone:</strong> @order.PhoneNumber</p>
+                        @if (!string.IsNullOrEmpty(order.Notes))
+                        {
+                            <p><strong>Notes:</strong> @order.Notes</p>
+                        }
+                        <p><strong>Payment Method:</strong> @order.PaymentMethod</p>
+                        <p><strong>Order Date:</strong> @order.OrderDate.ToString("dd/MM/yyyy hh:mm tt")</p>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>
+
+@section Scripts {
+    <script>
+        const searchInput = document.getElementById('orderSearch');
+        const statusSelect = document.getElementById('statusFilter');
+        const orders = document.querySelectorAll('.order-card');
+
+        function filterOrders() {
+            const searchTerm = searchInput.value.toLowerCase();
+            const selectedStatus = statusSelect.value;
+
+            orders.forEach(order => {
+                const status = order.dataset.status.toLowerCase();
+                const searchable = order.dataset.search.toLowerCase();
+
+                const matchSearch = searchable.includes(searchTerm);
+                const matchStatus = selectedStatus === "" || status === selectedStatus.toLowerCase();
+
+                order.style.display = (matchSearch && matchStatus) ? "block" : "none";
+            });
+        }
+
+        searchInput.addEventListener('input', filterOrders);
+        statusSelect.addEventListener('change', filterOrders);
+    </script>
+}

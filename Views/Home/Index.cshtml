@@ -3,15 +3,16 @@
     ViewData["Title"] = "Home";
     Layout = "~/Views/Shared/_Layout.cshtml"; 
 }
-<body>
+
         
     <section class="hero">
-            <h1>Al-Fannia Furniture & Decor</h1>
-            <p>Where Creativity Meets Elegance</p>
-            <input type="text"
-                    class="form-control search-bar"
-                    placeholder="Find your perfect furniture..." />
+        <h1>Al-Fannia Furniture & Decor</h1>
+        <p>Where Creativity Meets Elegance</p>
+        <input type="text"
+               class="form-control search-bar"
+               placeholder="Find your perfect furniture..." />
     </section>
+
     <div class="container mt-5">
         <div class="row justify-content-center">
             @foreach (var category in Model)
@@ -41,7 +42,7 @@
                 });
             });
         </script>
-</body>
+
 
 
 

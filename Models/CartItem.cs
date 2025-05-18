@@ -20,6 +20,9 @@ namespace GP.Models
         public string SelectedColors { get; set; } = "";
 
         public decimal TotalPrice => Product != null ? Quantity * Product.Price : 0;
+        public int? OrderId { get; set; }
+        public Order? Order { get; set; }
+
 
     }
 }
