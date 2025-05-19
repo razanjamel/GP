@@ -156,28 +156,32 @@
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'RequestVerificationToken': document.querySelector('input[name="__RequestVerificationToken"]').value
+                    'RequestVerificationToken': token
                 },
-                body: JSON.stringify({ productId: productId, quantity: 1 })
+                body: JSON.stringify({
+                    productId: productId,
+                    quantity: 1,
+                    selectedColor: "Black" 
+                })
             })
-            .then(response => {
-                if (response.ok) {
-                    // إشعار
-                    const original = button.innerHTML;
-                    button.innerHTML = "✔️ Added!";
-                    setTimeout(() => {
-                        button.innerHTML = original;
-                    }, 2000);
-                } else {
+                .then(response => {
+                    if (response.ok) {
+                        const original = button.innerHTML;
+                        button.innerHTML = "✔️ Added!";
+                        setTimeout(() => {
+                            button.innerHTML = original;
+                        }, 2000);
+                    } else {
                         alert("❌ Failed to add product, Please log in to the site.");
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert("⚠️ Error occurred.");
-            });
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert("⚠️ Error occurred.");
+                });
         }
     </script>
+
 }
 
 

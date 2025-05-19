@@ -1,0 +1,94 @@
+﻿@model GP.Models.Order
+
+@{
+    ViewData["Title"] = "Checkout";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var userId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+}
+
+<style>
+    .payment-section {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        background: url("/image/payment-bg.jpg") no-repeat center center/cover;
+        padding: 50px 0;
+    }
+
+    .payment-container {
+        background: rgba(255, 255, 255, 0.95);
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        max-width: 600px;
+        width: 100%;
+        animation: fadeIn 0.8s ease-in-out;
+    }
+
+    .form-control:hover,
+    .form-control:focus {
+        border-color: #7c0101;
+        box-shadow: 0 0 8px rgba(139, 69, 19, 0.5);
+    }
+
+    .btn-pay {
+        background-color: #7c0101;
+        color: white;
+        width: 100%;
+        transition: 0.3s;
+    }
+
+    .btn-pay:hover {
+        background-color: #5a2e0f;
+    }
+
+    @@keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+</style>
+
+<div class="payment-section">
+    <div class="payment-container">
+        <h3 class="text-center mb-4">Checkout</h3>
+
+        <form asp-action="SubmitOrder" asp-controller="Order" method="post">
+            @Html.AntiForgeryToken()
+
+            <div class="mb-3">
+                <input asp-for="FullName" class="form-control" placeholder="Full Name" required />
+                <span asp-validation-for="FullName" class="text-danger"></span>
+
+            </div>
+
+            <div class="mb-3">
+                <input asp-for="Address" class="form-control" placeholder="Address" required />
+                <span asp-validation-for="Address" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <input asp-for="PhoneNumber" class="form-control" placeholder="Phone Number" required />
+                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <textarea asp-for="Notes" class="form-control" rows="3" placeholder="Additional Notes (optional)"></textarea>
+            </div>
+
+            <input asp-for="UserId" type="hidden" value="@userId"/>
+            <button type="submit" class="btn btn-pay">Place Order</button>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}
