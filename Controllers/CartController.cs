@@ -45,7 +45,6 @@ namespace GP.Controllers
 
             if (existingItem != null)
             {
-                // دمج اللون إذا مش موجود
                 var colors = (existingItem.SelectedColors ?? "").Split(',', StringSplitOptions.RemoveEmptyEntries).Select(c => c.Trim()).ToList();
                 if (!colors.Contains(model.SelectedColor))
                 {

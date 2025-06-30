@@ -1,0 +1,49 @@
+﻿@model GP.Models.Order
+
+@{
+    ViewData["Title"] = "Order Details";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2 class="mb-4" style="color: #7c0101;">Order Details - Order #@Model.Id</h2>
+
+<div class="mb-3">
+    <strong>User ID:</strong> @Model.UserId <br />
+    <strong>Order Date:</strong> @Model.OrderDate.ToString("dd/MM/yyyy HH:mm tt") <br />
+    <strong>Status:</strong> @Model.Status <br />
+    <strong>Payment Method:</strong> @Model.PaymentMethod <br />
+    <strong>Address:</strong> @Model.Address <br />
+    <strong>Phone:</strong> @Model.PhoneNumber <br />
+    @if (!string.IsNullOrWhiteSpace(Model.Notes))
+    {
+        <strong>Notes:</strong> @Model.Notes <br />
+    }
+</div>
+
+<h4>Products in this Order:</h4>
+
+<table class="table table-bordered table-striped shadow-sm">
+    <thead class="table-dark">
+        <tr>
+            <th>Product Name</th>
+            <th>Price (per item)</th>
+            <th>Quantity</th>
+            <th>Selected Color</th>
+            <th>Total Price</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var detail in Model.OrderDetails)
+        {
+            <tr>
+                <td>@detail.ProductName</td>
+                <td>@detail.ProductPrice.ToString("C")</td>
+                <td>@detail.Quantity</td>
+                <td>@detail.SelectedColor</td>
+                <td>@(detail.ProductPrice * detail.Quantity).ToString("C")</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a asp-area="Admin" asp-controller="Orders" asp-action="Index" class="btn btn-secondary mt-3">Back to Orders</a>
