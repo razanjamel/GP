@@ -16,19 +16,41 @@ namespace GP.Controllers
             _context = context;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            var cartItems = await _context.CartItems
+                .Include(c => c.Product)
+                .Where(c => c.UserId == userId && c.OrderId == null)
+                .ToListAsync();
+
+            if (!cartItems.Any())
+            {
+                TempData["ErrorMessage"] = "You cannot complete the order because the cart is empty.";
+                return RedirectToAction("Index", "Cart");
+            }
+
+            var order = new Order
+            {
+                FullName = "",
+                Address = "",
+                PhoneNumber = "",
+                UserId = userId,
+                CartItems = new List<CartItem>()
+            };
+
+
+            return View(order);
         }
+
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> SubmitOrder(Order order)
         {
             if (!ModelState.IsValid)
-            {
                 return View("Index", order);
-            }
 
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             order.UserId = userId;
@@ -40,16 +62,7 @@ namespace GP.Controllers
                 .Include(c => c.Product)
                 .ToListAsync();
 
-            if (cartItems.Any())
-            {
-                order.CartItems = cartItems;
-
-                foreach (var item in cartItems)
-                {
-                    item.Order = order;
-                }
-            }
-            else
+            if (!cartItems.Any())
             {
                 ModelState.AddModelError("", "Your cart is empty.");
                 return View("Index", order);
@@ -58,14 +71,36 @@ namespace GP.Controllers
             _context.Orders.Add(order);
             await _context.SaveChangesAsync();
 
+            var orderDetails = cartItems.Select(ci => new OrderDetail
+            {
+                OrderId = order.Id,
+                ProductId = ci.ProductId,
+                ProductName = ci.Product?.Name ?? "",
+                ProductPrice = ci.Product?.Price ?? 0,
+                Quantity = ci.Quantity,
+                SelectedColor = ci.SelectedColors
+            }).ToList();
+
+            _context.OrderDetails.AddRange(orderDetails);
+
+            foreach (var item in cartItems)
+            {
+                item.OrderId = order.Id;
+            }
+
+            await _context.SaveChangesAsync();
+
             TempData["SuccessMessage"] = "Your order has been placed successfully!";
             return RedirectToAction("MyOrders", "Order");
         }
+
+
         public async Task<IActionResult> MyOrders()
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var orders = await _context.Orders
                 .Where(o => o.UserId == userId)
+                .Include(o => o.OrderDetails)
                 .OrderByDescending(o => o.OrderDate)
                 .ToListAsync();
 
@@ -73,5 +108,6 @@ namespace GP.Controllers
         }
 
 
+
     }
-    }
+}

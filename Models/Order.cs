@@ -18,7 +18,7 @@ namespace GP.Models
         [Phone]
         public required string PhoneNumber { get; set; }
 
-        public required string Notes { get; set; }
+        public string? Notes { get; set; }
 
         [Required]
         public string Status { get; set; } = "Pending";
@@ -30,6 +30,9 @@ namespace GP.Models
 
         public required string UserId { get; set; }
 
-        public required List<CartItem> CartItems { get; set; }
+        public required List<CartItem> CartItems { get; set; } = new List<CartItem>();
+
+        public List<OrderDetail> OrderDetails { get; set; } = new List<OrderDetail>();
+
     }
 }
