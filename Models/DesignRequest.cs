@@ -4,6 +4,14 @@ using Microsoft.AspNetCore.Http;
 
 namespace GP.Models
 {
+    public enum DesignStatus
+    {
+        New,
+        InProgress,
+        Shipped,
+        Delivered,
+        Cancelled
+    }
     public class DesignRequest
     {
         [Required]
@@ -20,9 +28,11 @@ namespace GP.Models
         [EmailAddress]
         public string Email { get; set; }
 
+        [NotMapped] 
         [Required]
-        [NotMapped]
         public IFormFile DesignImage { get; set; }
+
+        public string? ImagePath { get; set; }
 
         [Required]
         public string Width { get; set; }
@@ -34,7 +44,11 @@ namespace GP.Models
 
         public string Fabric { get; set; }
 
-        [Key]
-        public string UserId { get; set; }
+        public int Id { get; set; }  
+        public string? UserId { get; set; }
+        public DesignStatus Status { get; set; } = DesignStatus.New;
+
+        [ScaffoldColumn(false)]
+        public DateTime SubmittedAt { get; set; }
     }
 }

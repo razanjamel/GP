@@ -4,21 +4,17 @@ namespace GP.ViewModels
 {
     public class ChangePasswordViewModel
     {
-        [Required(ErrorMessage = "Email is required")]
-        [EmailAddress]
-        [Display(Name = "Email")]
-        public string Email { get; set; }
-
-        [Required(ErrorMessage = "New Password is required")]
-        [StringLength(40, ErrorMessage = "The {0} must be at least {2} charachters long.", MinimumLength = 6)]
+        [Required(ErrorMessage = "Current password is required")]
         [DataType(DataType.Password)]
-        [Display(Name = "New Password")]
-        public string Newpassword { get; set; }
+        public string CurrentPassword { get; set; }
 
-        [Required(ErrorMessage = "Confitm New password is required")]
+        [Required(ErrorMessage = "New password is required")]
         [DataType(DataType.Password)]
-        [Display(Name = "Confirm New Password")]
-        [Compare("Newpassword", ErrorMessage = "The password and confirmation password do not match!")]
-        public string ConfirmNewPassword { get; set; }
+        public string NewPassword { get; set; }
+
+        [Required(ErrorMessage = "Confirm password is required")]
+        [DataType(DataType.Password)]
+        [Compare("NewPassword", ErrorMessage = "Passwords do not match")]
+        public string ConfirmPassword { get; set; }
     }
 }

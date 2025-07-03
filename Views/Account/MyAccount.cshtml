@@ -1,0 +1,80 @@
+﻿@model GP.ViewModels.MyAccountViewModel
+@{
+    ViewData["Title"] = "My Account";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    html, body {
+        height: 100%;
+    }
+
+    body {
+        display: flex;
+        flex-direction: column;
+    }
+
+    main {
+        flex: 1;
+    }
+
+</style>
+
+<div class="container mt-5">
+    <div class="card shadow-lg border-0">
+        <div class="card-header text-white" style="background-color:#7c0101;">
+            <div class="d-flex justify-content-between align-items-center">
+                <h4 class="mb-0">My Account</h4>
+                <button class="btn btn-light btn-sm" data-bs-toggle="modal" data-bs-target="#editModal">
+                    <i class="fas fa-edit me-1"></i>Edit
+                </button>
+            </div>
+        </div>
+        <div class="card-body row">
+            <div class="col-md-3 text-center">
+                <img src="@((Model.ProfileImageUrl ?? "/image/default-user.png"))" class="rounded-circle img-fluid" style="max-width:150px;" alt="Profile Image" />
+            </div>
+            <div class="col-md-9">
+                <h5 class="text-dark">@Model.FirstName @Model.LastName</h5>
+                <p><strong>Email:</strong> @Model.Email</p>
+                <p><strong>Phone:</strong> @Model.Phone</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Edit -->
+<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <form asp-action="UpdateAccountInfo" asp-controller="Account" method="post" enctype="multipart/form-data" class="modal-content">
+            <div class="modal-header" style="background-color:#7c0101;">
+                <h5 class="modal-title text-white" id="editModalLabel">Edit Profile</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label asp-for="FirstName" class="form-label">First Name</label>
+                    <input asp-for="FirstName" class="form-control" />
+                    <span asp-validation-for="FirstName" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="LastName" class="form-label">Last Name</label>
+                    <input asp-for="LastName" class="form-control" />
+                    <span asp-validation-for="LastName" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Phone" class="form-label">Phone</label>
+                    <input asp-for="Phone" class="form-control" />
+                    <span asp-validation-for="Phone" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label for="ProfileImage" class="form-label">Profile Image</label>
+                    <input type="file" name="ProfileImage" class="form-control" />
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="submit" class="btn" style="background-color:#eaaaa1; color:white;">Save Changes</button>
+            </div>
+        </form>
+    </div>
+</div>
