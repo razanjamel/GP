@@ -1,0 +1,80 @@
+﻿@model List<GP.Models.DesignRequest>
+@using GP.Models
+@{
+    ViewData["Title"] = "Design Requests";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2 class="mb-4" style="color: #7c0101;">Design Requests</h2>
+
+<form method="get" class="mb-3 row g-3">
+    <label for="statusFilter" class="form-label">Filter by Status:</label>
+    <div class="col-auto">
+        <select name="status" class="form-select" onchange="this.form.submit()" style="max-width: 300px;">
+            <option value="">All Statuses</option>
+            @foreach (var status in Enum.GetValues(typeof(DesignStatus)))
+            {
+                <option value="@status" selected="@(ViewBag.CurrentStatus?.ToString() == status.ToString() ? "selected" : null)">
+                    @status
+                </option>
+            }
+        </select>
+    </div>
+</form>
+
+@if (!Model.Any())
+{
+    <div class="alert alert-info">No design requests found.</div>
+}
+else
+{
+    <table class="table table-bordered table-striped table-hover">
+        <thead class="table-dark">
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Image</th>
+                <th>Size</th>
+                <th>Color</th>
+                <th>Fabric</th>
+                <th>Status</th>
+                <th>Submitted At</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.FirstName @item.LastName</td>
+                    <td>@item.Email</td>
+                    <td>@item.Phone</td>
+                    <td>
+                        @if (!string.IsNullOrEmpty(item.ImagePath))
+                        {
+                            <img src="@item.ImagePath" alt="Design Image" style="width: 60px; height: 60px; object-fit: cover;" />
+                        }
+                    </td>
+                    <td>@item.Width x @item.Height</td>
+                    <td>@item.Color</td>
+                    <td>@item.Fabric</td>
+                    <td>
+                        <form method="post" asp-action="UpdateStatus" asp-route-id="@item.Id" class="d-flex">
+                            <select name="newStatus" class="form-select me-2">
+                                @foreach (var status in Enum.GetValues(typeof(DesignStatus)))
+                                {
+                                    <option value="@status" selected="@(item.Status == (DesignStatus)status ? "selected" : null)">
+                                        @status
+                                    </option>
+                                }
+                            </select>
+                            <button type="submit" class="btn btn-sm btn-primary">Update</button>
+                        </form>
+                    </td>
+                    <td>@item.SubmittedAt.ToString("yyyy-MM-dd HH:mm")</td>
+                    <td></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

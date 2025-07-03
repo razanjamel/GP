@@ -3,25 +3,79 @@
 @{
     ViewData["Title"] = "Log in";
     Layout = "~/Views/Shared/_Layout.cshtml";
-
-
 }
+<style>
+    input {
+        border-radius: 8px !important;
+    }
 
+        input:focus {
+            outline: none !important;
+            box-shadow: 0 0 5px #ff0000 !important;
+            border: 1px solid #ff0000 !important;
+        }
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>furnture system Login_Page</title>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
-          rel="stylesheet" />
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
-          rel="stylesheet" />
-    <link rel="stylesheet" href="~/CSS/LoginStyle.css" />
-    <link rel="stylesheet" href="~/CSS/site.css" />   
-</head>
-<body class="bg-light">
+    .logo-container img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 10px;
+    }
+
+    .navbar .nav-link {
+        color: white !important;
+    }
+
+        .navbar .nav-link:hover {
+            color: #ffcccb !important;
+        }
+
+    .navbar {
+        padding: 15px 0;
+        min-height: 80px;
+    }
+
+    .summary-box {
+        border: 2px solid #7c0101;
+        border-radius: 10px;
+        padding: 15px;
+        background-color: white;
+    }
+
+    .navbar-nav .nav-link {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        color: white !important;
+        font-size: 16px;
+        font-family: 'Segoe UI', sans-serif;
+        transition: color 0.3s;
+    }
+
+        .navbar-nav .nav-link i {
+            font-size: 18px;
+        }
+
+    .card {
+        margin-top: 120px;
+        margin-bottom: 100px;
+    }
+
+</style>
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success text-center" id="successMessage">
+            @TempData["SuccessMessage"]
+        </div>
+
+        <script>
+            setTimeout(function () {
+                var msg = document.getElementById("successMessage");
+                if (msg) {
+                    msg.style.display = "none";
+                }
+            }, 4000);
+        </script>
+    }
    <div class="d-flex justify-content-center mt-2">
     <div class="container d-flex justify-content-center align-items-center min-vh-100">
         <div class="card p-4 shadow-lg" style="width: 100%; max-width: 400px">
@@ -39,47 +93,36 @@
                 </div>
                 <h3>Login</h3>
             </div>
+            @if (!ViewData.ModelState.IsValid)
+            {
+                foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                {
+                    <div class="text-danger text-center">@error.ErrorMessage</div>
+                }
+            }
             <form method="post">
-                <div class="form-group">
-                    <label for="Email">Email</label>
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">
-                                <i class="fas fa-user"></i>
-                            </span>
-                        </div>
-                        <input type="email"
-                               class="form-control"
-                               id="email" 
-                               name="Email"
-                               asp-for="Email"
-                               placeholder="Enter Email"
-                               required />
+                    <div class="form-group mb-3">
+                        <label asp-for="Email" class="form-label"></label>
+                        <input asp-for="Email" class="form-control" />
+                    @if (ViewData.ModelState["Email"]?.Errors.Count > 0)
+                    {
+                        <div class="text-danger">@ViewData.ModelState["Email"].Errors[0].ErrorMessage</div>
+                    }
+
                     </div>
-                </div>
 
-                <div class="form-group">
-                    <label for="password">Password</label>
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">
-                                <i class="fas fa-lock"></i>
-                            </span>
+                    <div class="form-group mb-3">
+                        <label asp-for="Password" class="form-label"></label>
+                        <input asp-for="Password" class="form-control" />
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                        <div class="text-end mt-1">
+                            <a asp-action="ForgotPassword" asp-controller="Account" class="text-decoration-none text-primary" style="font-size: 0.9rem;">
+                                Forgot your password?
+                            </a>
                         </div>
-                        <input type="password"
-                               class="form-control"
-                               id="password"
-                               name="Password"
-                               asp-for="Password"
-                               placeholder="Enter password"
-                               required
-                               autocomplete="new-password" />
                     </div>
-                </div>
-                   
-
-
-                <button type="submit" class="btn btn-dark btn-block">
+   
+                <button type="submit" class="btn btn-block" style="background: #7c0101; color:white;">
                     Login
                 </button>
 
@@ -111,10 +154,8 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            // التأكد من تحميل المكتبات
             console.log('Bootstrap status:', typeof bootstrap !== 'undefined' ? 'Loaded' : 'Not loaded');
 
-            // حل بديل للقائمة
             const navbarToggler = document.querySelector('.navbar-toggler');
             const navbarCollapse = document.querySelector('.navbar-collapse');
 
@@ -123,9 +164,6 @@
             });
         });
     </script>
-</body>
-</html>
-
 @section scripts {
     <partial name="_ValidationScriptsPartial" />
 }
