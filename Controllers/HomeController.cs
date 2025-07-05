@@ -1,5 +1,6 @@
 using GP.Models;
 using GP.Data;
+using GP.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using Microsoft.EntityFrameworkCore;
@@ -23,9 +24,35 @@ namespace GP.Controllers
         public IActionResult Index()
         {
             var categories = _context.Categories.ToList();
-            return View(categories);
+            var products = _context.Products.Include(p => p.Category).ToList();
+
+            var viewModel = new HomeViewModel
+            {
+                Categories = categories,
+                Products = products
+            };
+
+            return View(viewModel);
         }
 
+        [HttpGet]
+        public IActionResult Search(string query)
+        {
+            if (string.IsNullOrWhiteSpace(query))
+            {
+                return RedirectToAction("Index");
+            }
+
+            var results = _context.Products
+                .Include(p => p.Category)
+                .Where(p =>
+                    p.Name.Contains(query) ||
+                    p.Description.Contains(query) ||
+                    p.Category.Name.Contains(query))
+                .ToList();
+
+            return View("SearchResults", results);
+        }
 
         public IActionResult ViewProductsByCategory(int id)
         {
@@ -64,7 +91,6 @@ namespace GP.Controllers
                 return RedirectToAction("DesignRequest");
             }
 
-            // «· Õﬁﬁ «·ÌœÊÌ „‰ «·’Ê—…
             if (model.DesignImage == null || model.DesignImage.Length == 0)
             {
                 ModelState.AddModelError("DesignImage", "Please upload a design image.");
@@ -72,7 +98,6 @@ namespace GP.Controllers
 
             if (!ModelState.IsValid)
             {
-                // «Œ Ì«—Ì: ⁄—÷ ﬂ· «·√Œÿ«¡ ›Ì «·ﬂÊ‰”Ê·
                 foreach (var error in ModelState.Values.SelectMany(v => v.Errors))
                 {
                     Console.WriteLine("Model Error: " + error.ErrorMessage);
@@ -82,7 +107,6 @@ namespace GP.Controllers
                 return View("DesignRequest", model);
             }
 
-            // Õ›Ÿ «·’Ê—…
             string fileName = Guid.NewGuid().ToString() + Path.GetExtension(model.DesignImage.FileName);
             string uploads = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads");
 

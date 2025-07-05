@@ -2,29 +2,182 @@
     ViewData["Title"] = "Abou Us";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<style>
 
+    /* About Us Section */
+    .about-us {
+        background-image: url('@Url.Content("~/image/Chair 9.jpg")');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        width: 100%fit-content;
+        height: 400px;
+        padding: 50px 0;
+        margin-top: 100px;
+    }
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>About Us - Al-Fannia Furniture & Decor</title>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
-          rel="stylesheet" />
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
-          rel="stylesheet" />
-    <link rel="stylesheet" href="CSS/style.css" />
-    <link rel="stylesheet" href="~/CSS/AbouUs.css" />
-    <link rel="stylesheet" href="~/CSS/site.css" />
- 
-</head>
-<body>
+        .about-us h2 {
+            font-size: 36px;
+            font-weight: bold;
+            color: #7c0101;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+    /* Services Section */
+    .services {
+        background: #fff;
+        padding: 50px 0;
+    }
+
+        .services h2 {
+            text-align: center;
+            font-size: 36px;
+            color: #7c0101;
+            margin-bottom: 30px;
+        }
+
+    .service-card {
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+        overflow: hidden;
+        transition: 0.3s ease-in-out;
+    }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .service-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .service-card .service-content {
+            padding: 20px;
+            text-align: center;
+        }
+
+            .service-card .service-content h5 {
+                font-size: 22px;
+                color: #7c0101;
+                margin-bottom: 10px;
+            }
+
+    /* Image Gallery */
+    .gallery {
+        background: #f4f4f4;
+        padding: 50px 0;
+    }
+
+        .gallery h2 {
+            text-align: center;
+            font-size: 36px;
+            color: #8b4513;
+            margin-bottom: 30px;
+        }
+
+        .gallery .row img {
+            border-radius: 10px;
+            transition: transform 0.3s ease-in-out;
+        }
+
+            .gallery .row img:hover {
+                transform: scale(1.1);
+            }
+
+    /* Testimonials Section */
+    .testimonials {
+        background: #fff;
+        padding: 50px 0;
+    }
+
+        .testimonials h2 {
+            text-align: center;
+            font-size: 36px;
+            color: #7c0101;
+            margin-bottom: 30px;
+        }
+
+    .testimonial-card {
+        background: #f8f8f8;
+        border-radius: 10px;
+        padding: 30px;
+        text-align: center;
+        margin-bottom: 30px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease-in-out;
+    }
+
+        .testimonial-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .testimonial-card img {
+            border-radius: 50%;
+            width: 80px;
+            height: 80px;
+            margin-bottom: 20px;
+        }
+
+    /* Team Section */
+    .team {
+        background: #f4f4f4;
+        padding: 50px 0;
+    }
+
+        .team h2 {
+            text-align: center;
+            font-size: 36px;
+            color: #7c0101;
+            margin-bottom: 30px;
+        }
+
+    .team-member {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+        .team-member img {
+            border-radius: 50%;
+            width: 150px;
+            height: 150px;
+            margin-bottom: 20px;
+            transition: transform 0.3s ease-in-out;
+        }
+
+            .team-member img:hover {
+                transform: scale(1.1);
+            }
+
+        .team-member h4 {
+            font-size: 24px;
+            color: #7c0101;
+        }
+
+        .team-member p {
+            color: #555;
+        }
+
+    /* Map Section */
+    .map-section {
+        background: #f4f4f4;
+        padding: 50px 0;
+    }
+
+        .map-section iframe {
+            width: 100%;
+            height: 450px;
+            border: none;
+            border-radius: 10px;
+        }
+
+</style>
      <!-- About Us Section -->
     <div class="about-us">
         <div class="container" style="color: rgb(253, 249, 249); font-size: 27px">
             <h2>About Us</h2>
-            <p>
+        <p style="text-align: center; font-size:22px">
                 Al-Fannia Furniture & Decor is a leading brand in the furniture
                 industry. Our mission is to provide high-quality furniture that
                 combines style and functionality. Our team is dedicated to creating
@@ -166,13 +319,11 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function () {
-            // التأكد من تحميل المكتبات
             console.log(
                 "Bootstrap status:",
                 typeof bootstrap !== "undefined" ? "Loaded" : "Not loaded"
             );
 
-            // حل بديل للقائمة
             const navbarToggler = document.querySelector(".navbar-toggler");
             const navbarCollapse = document.querySelector(".navbar-collapse");
 
@@ -181,7 +332,5 @@
             });
         });
     </script>
-</body>
-</html>
 
 

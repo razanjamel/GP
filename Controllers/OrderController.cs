@@ -87,6 +87,7 @@ namespace GP.Controllers
             {
                 item.OrderId = order.Id;
             }
+            _context.CartItems.RemoveRange(cartItems);
 
             await _context.SaveChangesAsync();
 

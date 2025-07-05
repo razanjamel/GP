@@ -5,23 +5,52 @@
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<h1 style="margin-top:160px">User Management</h1>
+<h1 style="margin-top:130px; color: #7c0101; margin-bottom:50px;">User Management</h1>
 
 @if (TempData["SuccessMessage"] != null)
 {
-    <div class="alert alert-success">
+    <div id="successAlert" class="alert alert-success text-center shadow"
+         style="font-size: 1rem; font-weight: 500; border-radius: 10px; margin-bottom:10px;">
         @TempData["SuccessMessage"]
     </div>
+
+    <script>
+        window.onload = function () {
+            setTimeout(function () {
+                var alert = document.getElementById('successAlert');
+                if (alert) {
+                    alert.style.transition = 'opacity 0.5s ease';
+                    alert.style.opacity = '0';
+                    setTimeout(() => alert.remove(), 500);
+                }
+            }, 4000);
+        };
+    </script>
 }
 
 @if (TempData["ErrorMessage"] != null)
 {
-    <div class="alert alert-danger">
+    <div id="errorAlert" class="alert alert-danger text-center shadow"
+         style="font-size: 1rem; font-weight: 500; border-radius: 10px; margin-bottom:50px;">
         @TempData["ErrorMessage"]
     </div>
+
+    <script>
+        window.onload = function () {
+            setTimeout(function () {
+                var alert = document.getElementById('errorAlert');
+                if (alert) {
+                    alert.style.transition = 'opacity 0.5s ease';
+                    alert.style.opacity = '0';
+                    setTimeout(() => alert.remove(), 500);
+                }
+            }, 4000);
+        };
+    </script>
 }
 
-<div class="table-responsive">
+
+<div class="table-responsive" style="margin-top:50px;">
     <table class="table table-striped">
         <thead>
             <tr>
