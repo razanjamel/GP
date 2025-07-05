@@ -8,14 +8,12 @@
              style="width: 100%; max-width: 400px; margin: 70px">
             <div class="text-center">
                 <div class="mb-4">
-                    <img src="image/Alfanneya.jpg"
-                         alt="Logo"
-                         style="
-                width: 345px;
-                height: 150px;
-                object-fit: cover;
-                border-radius: 10px;
-              " />
+                    <img src="~/image/Logo_Fanyia.png" alt="Logo" style="
+                       height: 80px;
+                        object-fit: cover;
+                        border-radius: 10px;
+                        align-content:center;
+                        " />
                 </div>
                 <h3>Sign Up</h3>
             </div>
@@ -24,66 +22,61 @@
                 <hr />
                 <div asp-validation-summary="All" class="text-danger"></div>
                 <div class="form-group">
-                    <label asp-for="FirstName">First Name</label>
+                    <label asp-for="FirstName">First Name:</label>
                     <input asp-for="FirstName"
                            type="text"
                            class="form-control"
                            id="firstName"
-                           placeholder="Enter first name"
                            required />
                     <span asp-validation-for="FirstName" class="text-danger"></span>
 
                 </div>
 
                 <div class="form-group">
-                    <label asp-for="LastName">Last Name</label>
+                    <label asp-for="LastName">Last Name:</label>
                     <input asp-for="LastName"
                            type="text"
                            class="form-control"
                            id="lastName"
-                           placeholder="Enter last name"
                            required />
                     <span asp-validation-for="LastName" class="text-danger"></span>
 
                 </div>
 
                 <div class="form-group">
-                    <label asp-for="Email">Email</label>
+                    <label asp-for="Email">Email:</label>
                     <input asp-for="Email"
                            type="email"
                            class="form-control"
                            id="email"
-                           placeholder="Enter email"
                            required />
                     <span asp-validation-for="Email" class="text-danger"></span>
                 </div>
 
 
                 <div class="form-group">
-                    <label asp-for="password">Password</label>
+                    <label asp-for="password">Password:</label>
                     <input asp-for="password"
                            type="password"
                            class="form-control"
                            id="password"
-                           placeholder="Enter password"
                            required
                            autocomplete="new-password" />
                     <span asp-validation-for="password" class="text-danger"></span>
                 </div>
 
                 <div class="form-group">
-                    <label asp-for="ConfirmPassword">Confirm Password</label>
+                    <label asp-for="ConfirmPassword">Confirm Password:</label>
                     <input asp-for="ConfirmPassword"
                            type="password"
                            class="form-control"
                            id="confirmPassword"
-                           placeholder="Confirm password"
                            required
                            autocomplete="new-password" />
                     <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
                 </div>
 
-                <button type="submit" class="btn btn-dark btn-block">Sign Up</button>
+                <button type="submit" class="btn btn-block" style="background: #7c0101; color:white;">Sign Up</button>
 
                 <div class="text-center mt-3">
                     <small>or sign up with</small>

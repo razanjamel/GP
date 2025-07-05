@@ -87,23 +87,20 @@
         padding: 0;
     }
 
-    /* استخدام Flexbox لتوزيع المحتوى بحيث يكون الفوتر في الأسفل */
     body {
         display: flex;
         flex-direction: column;
         background: #f2f2f2;
     }
 
-    /* حاوية المحتوى الأساسية؛ تأخذ المساحة الباقية من الشاشة */
     .content-wrapper {
         flex: 1;
         display: flex;
         flex-direction: column;
     }
 
-    /* قسم إضافة التصنيف في منتصف الصفحة أفقياً وعمودياً */
     .add-product-section {
-        flex: 1; /* لجعل هذا القسم يتمدد ويملأ الفراغ */
+        flex: 1; 
         display: flex;
         align-items: center; /* توسيط عمودي */
         justify-content: center; /* توسيط أفقي */
@@ -117,14 +114,10 @@
         transition: transform 0.3s ease, box-shadow 0.3s ease;
         background: linear-gradient(135deg, #ffffff 0%, #fef6e4 100%);
     }
-
-        /* تأثير الرفع والظل عند التحويم على البطاقة */
         .custom-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
         }
-
-    /* تنسيق العناوين والأزرار */
     .active-header {
         font-weight: bold;
         color: #7c0101;
@@ -143,14 +136,11 @@
         transition: background-color 0.3s ease, box-shadow 0.3s ease;
         border-radius: 30px;
     }
-
-        /* تأثير عند التحويم على الزر */
         .btn-custom:hover {
             background-color: #f8b400;
             box-shadow: 0 8px 15px rgba(248, 180, 0, 0.4);
         }
 
-    /* تنسيق الحقول */
     .form-control {
         border-radius: 30px;
         box-shadow: none;
@@ -212,7 +202,7 @@
         <div class="col-md-8 col-lg-6">
             <div class="card custom-card shadow">
                 <div class="card-body">
-                    <h3 class="card-title text-center mb-4">Add Product</h3>
+                    <h3 class="card-title text-center mb-4" style="color:#7c0101;">Add Product</h3>
                     <form asp-action="Add" method="post" enctype="multipart/form-data">
                         <!-- Product Name -->
                         <div class="form-group">
@@ -257,9 +247,10 @@
                             </select>
                             <span asp-validation-for="CategoryId" class="text-danger"></span>
                         </div>
-
-                        <button type="submit" class="btn btn-custom btn-block mt-3">Add</button>
-                        <a asp-action="Index" class="btn btn-secondary mt-2">Back</a>
+                        <div class="form-group text-center mt-4">
+                            <button type="submit" class="btn btn-custom px-5">Update</button>
+                            <a asp-action="Index" class="btn btn-secondary ml-2">Back</a>
+                        </div>
                     </form>
                 </div>
             </div>

@@ -34,10 +34,10 @@ html {
         margin-top: 10px;
     }
 
-.search-bar {
-    width: 50%;
-    margin-top: 20px;
-}
+    .hero form .search-bar {
+        width: 50%;
+        margin-top: 20px;
+    }
 
 
 

@@ -66,10 +66,8 @@ namespace IdentityDemo.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            // get user current roles
             var userRoles = await userManager.GetRolesAsync(user);
 
-            // get all available roles
             var roles = roleManager.Roles.Select(r => new SelectListItem 
             {
                 Text = r.Name,

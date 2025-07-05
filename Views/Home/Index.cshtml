@@ -1,21 +1,39 @@
-﻿@model IEnumerable<GP.Models.Category>
+﻿@model GP.ViewModels.HomeViewModel
+
 @{
     ViewData["Title"] = "Al-Fannia Furniture";
     Layout = "~/Views/Shared/_Layout.cshtml"; 
 }
+<style>
+    .search-wrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
 
-        
+    .search-bar {
+        width: 50%;
+        margin-bottom: 10px;
+    }
+
+    .btnSearch:hover{
+        color: #f8b400 !important;
+    }
+</style>
+      
     <section class="hero">
-        <h1>Al-Fannia Furniture & Decor</h1>
+        <h1>Al-Faniya Furniture & Decor</h1>
         <p>Where Creativity Meets Elegance</p>
-        <input type="text"
-               class="form-control search-bar"
-               placeholder="Find your perfect furniture..." />
+        <form id="searchForm" asp-action="Search" method="get" class="search-wrapper mb-4">
+            <input type="text" name="query" class="form-control mb-3" style="width: 50vw; height: 45px; font-size: 1rem; border-radius: 10px;" placeholder="Find your perfect furniture..." />
+            <button type="submit" class="btn btnSearch" style="background-color: #7c0101; color:white; padding: 10px 25px; font-size: 1rem;">Search</button>
+        </form>
+
     </section>
 
     <div class="container mt-5">
         <div class="row justify-content-center">
-            @foreach (var category in Model)
+        @foreach (var category in Model.Categories)
             {
                 <div class="col-md-3 col-sm-6 mb-4">
                     <a href="/Home/ViewProductsByCategory/@category.Id" class="category-card">
@@ -25,21 +43,25 @@
                 </div>
             }
         </div>
-    </div>                        
+    </div>
         <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
         <script>
             document.addEventListener('DOMContentLoaded', function () {
-                // التأكد من تحميل المكتبات
                 console.log('Bootstrap status:', typeof bootstrap !== 'undefined' ? 'Loaded' : 'Not loaded');
 
-                // حل بديل للقائمة
                 const navbarToggler = document.querySelector('.navbar-toggler');
                 const navbarCollapse = document.querySelector('.navbar-collapse');
 
                 navbarToggler.addEventListener('click', function () {
                     navbarCollapse.classList.toggle('show');
                 });
+            });
+            window.addEventListener("pageshow", function (event) {
+                const form = document.getElementById("searchForm");
+                if (form) {
+                    form.reset();
+                }
             });
         </script>
 

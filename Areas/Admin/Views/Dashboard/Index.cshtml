@@ -22,7 +22,7 @@
         <div class="row">
 
             <div class="col-md-10 dashboard-content">
-                <h2>Welcome back, John Smit!</h2>
+                <h2>Welcome back, @ViewBag.FullName!</h2>
                 <div class="card p-4 mb-4 shadow" style="border-radius: 25px; background: linear-gradient(135deg, #7c0101, #f3f0ef); color: white;">
                     <div class="d-flex align-items-center justify-content-between">
                         <div>
@@ -51,7 +51,7 @@
                     <div class="col-md-4">
                         <div class="bg-white card-box shadow-sm text-center">
                             <h5>Orders</h5>
-                            <p>+1.0K</p>
+                            <p>@ViewBag.OrderCount</p>
                         </div>
                     </div>
                 </div>

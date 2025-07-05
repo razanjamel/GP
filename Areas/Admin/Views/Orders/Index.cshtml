@@ -9,10 +9,25 @@
 
 @if (TempData["SuccessMessage"] != null)
 {
-    <div class="alert alert-success">
+    <div id="successAlert" class="alert alert-success text-center shadow"
+         style="font-size: 1rem; font-weight: 500; border-radius: 10px; margin-bottom:10px;">
         @TempData["SuccessMessage"]
     </div>
+
+    <script>
+        window.onload = function () {
+            setTimeout(function () {
+                var alert = document.getElementById('successAlert');
+                if (alert) {
+                    alert.style.transition = 'opacity 0.5s ease';
+                    alert.style.opacity = '0';
+                    setTimeout(() => alert.remove(), 500);
+                }
+            }, 4000);
+        };
+    </script>
 }
+
 
 <div class="mb-3">
     <label for="statusFilter" class="form-label">Filter by Status:</label>

@@ -293,10 +293,25 @@
     <h2 class="section-title">🧾 My Orders</h2>
     @if (TempData["SuccessMessage"] != null)
     {
-        <div class="alert alert-success text-center fw-bold mb-3">
+        <div id="successAlert" class="alert alert-success text-center shadow"
+             style="font-size: 1rem; font-weight: 500; border-radius: 10px; margin-bottom:50px; margin-top:20px">
             @TempData["SuccessMessage"]
         </div>
+
+        <script>
+            window.onload = function () {
+                setTimeout(function () {
+                    var alert = document.getElementById('successAlert');
+                    if (alert) {
+                        alert.style.transition = 'opacity 0.5s ease';
+                        alert.style.opacity = '0';
+                        setTimeout(() => alert.remove(), 500);
+                    }
+                }, 4000);
+            };
+        </script>
     }
+
 
 
     <!-- Filter & Search -->

@@ -17,13 +17,26 @@ namespace GP.Areas.Admin.Controllers
             _context = context;
             _env = env;
         }
-        
+
         // عرض كل المنتجات
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? categoryId)
         {
-            var products = await _context.Products.Include(p => p.Category).ToListAsync();
+            var productsQuery = _context.Products.Include(p => p.Category).AsQueryable();
+
+            if (categoryId.HasValue)
+            {
+                productsQuery = productsQuery.Where(p => p.CategoryId == categoryId.Value);
+            }
+
+            var products = await productsQuery.ToListAsync();
+            var categories = await _context.Categories.ToListAsync();
+
+            ViewBag.Categories = categories;
+            ViewBag.SelectedCategory = categoryId;
+
             return View(products);
         }
+
 
         // عرض صفحة إضافة
         [HttpGet]
@@ -50,7 +63,6 @@ namespace GP.Areas.Admin.Controllers
                 return View(product);
             }
 
-            // رفع الصورة (مرة واحدة فقط)
             var uploadsFolder = Path.Combine(_env.WebRootPath, "image");
             Directory.CreateDirectory(uploadsFolder);
 

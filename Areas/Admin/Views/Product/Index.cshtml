@@ -3,81 +3,96 @@
 @{
     ViewData["Title"] = "Manage Products";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+
+    var categories = ViewBag.Categories as List<GP.Models.Category>;
+    var selectedCategory = ViewBag.SelectedCategory as int?;
 }
 
-<style>    
-    .product-card {
-    transition: transform 0.3s, box-shadow 0.3s;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    overflow: hidden;
-    margin-bottom: 20px;
+<style>
+    .product-card-admin {
+        border-radius: 15px;
+        overflow: hidden;
+        background: #fff;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
     }
 
-    .product-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    .product-card-admin:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
     }
 
     .product-img {
-    height: 200px;
-    object-fit: cover;
-    width: 100%;
+        height: 200px;
+        object-fit: cover;
+        border-bottom: 1px solid #eee;
     }
 
-    .product-title {
-    font-size: 1.2rem;
-    font-weight: bold;
-    color: #7c0101;
-    }
-
-    .product-price {
-    font-size: 1.1rem;
-    color: #f8b400;
-    font-weight: bold;
-    }
-
-    .btn-custom {
-    background-color: #7c0101;
-    color: white;
-    border: none;
-    transition: background-color 0.3s;
-    width: 48%;
-    padding: 8px;
-    border-radius: 5px;
-    }
-
-    .btn-custom:hover {
-    background-color: #f8b400;
-    }
-
-    .btn-group {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 10px;
+    .product-actions a {
+        width: 45%;
     }
 
     .section-title {
-    text-align: center;
-    margin-bottom: 40px;
-    font-size: 2.5rem;
-    color: #7c0101;
-    font-weight: bold;
+        text-align: center;
+        margin-bottom: 40px;
+        font-size: 2.5rem;
+        color: #7c0101;
+        font-weight: bold;
     }
 
-    .product-description {
-    font-size: 0.9rem;
-    color: #555;
+    .top-buttons {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 25px;
+        align-items: center;
     }
 
-    .top-button {
-    display: flex;
-    justify-content: end;
-    margin-bottom: 25px;
+    .filter-form select {
+        padding: 6px 10px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        font-size: 1rem;
+    }
+
+    .filter-form button {
+        margin-left: 10px;
+        background-color: #7c0101;
+        color: white;
+        border: none;
+        padding: 6px 12px;
+        border-radius: 5px;
+    }
+
+    .filter-form button:hover {
+        background-color: #f8b400;
     }
 </style>
+
 <div class="container mt-5 pt-3">
-    <div class="top-button"> <a href="/Admin/Product/Add" class="btn btn-success shadow">+ Add New Product</a> </div>
+
+    <div class="top-buttons">
+        <form method="get" asp-action="Index" class="filter-form d-flex">
+            <select name="categoryId" class="form-control">
+                <option value="">All Categories</option>
+                @foreach (var category in categories)
+                {
+                    if (selectedCategory == category.Id)
+                    {
+                        <option value="@category.Id" selected="selected">@category.Name</option>
+                    }
+                    else
+                    {
+                        <option value="@category.Id">@category.Name</option>
+                    }
+                }
+
+            </select>
+            <button type="submit">Filter</button>
+        </form>
+
+        <a href="/Admin/Product/Add" class="btn btn-success shadow">+ Add New Product</a>
+    </div>
+
     <h2 class="section-title">Product Management</h2>
 
     @if (TempData["SuccessMessage"] != null)
@@ -101,23 +116,22 @@
         </script>
     }
 
-
-
-
     <div class="row">
         @foreach (var product in Model)
         {
             <div class="col-md-4 mb-4">
-                <div class="card product-card">
-                    <img src="@product.ImageUrl" class="card-img-top product-img" alt="@product.Name" />
-                    <div class="card-body">
-                        <h5 class="card-title product-title">@product.Name</h5>
-                        <p class="card-text product-description">@product.Description</p>
-                        <p class="product-price">$@product.Price</p>
-                        <p><strong>Colors:</strong> @product.AvailableColors</p>
-                        <div class="btn-group">
-                            <a href="/Admin/Product/Edit/@product.Id" class="btn btn-custom">Edit</a>
-                            <a href="/Admin/Product/Delete/@product.Id" class="btn btn-danger" onclick="return confirm('Are you sure to delete this product?')">Delete</a>
+                <div class="product-card-admin text-center">
+                    <img src="@product.ImageUrl" class="w-100 product-img" alt="@product.Name" />
+                    <div class="p-3">
+                        <h5 class="mb-2 text-dark">@product.Name</h5>
+                        <p class="text-muted mb-1">@product.Description</p>
+                        <p class="text-warning font-weight-bold mb-1">$@product.Price</p>
+                        <p class="mb-3"><strong>Colors:</strong> @product.AvailableColors</p>
+
+                        <div class="d-flex justify-content-between product-actions">
+                            <a href="/Admin/Product/Edit/@product.Id" class="btn btn-outline-primary btn-sm">✏️ Edit</a>
+                            <a href="/Admin/Product/Delete/@product.Id" class="btn btn-outline-danger btn-sm"
+                               onclick="return confirm('Are you sure you want to delete this product?');">🗑️ Delete</a>
                         </div>
                     </div>
                 </div>
@@ -126,8 +140,6 @@
     </div>
 </div>
 
-
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }
-
