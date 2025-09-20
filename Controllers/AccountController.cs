@@ -207,10 +207,11 @@ namespace GP.Controllers
                 user.FirstName = model.FirstName;
                 user.LastName = model.LastName;
                 user.PhoneNumber = model.Phone;
+                user.Email = model.Email;
 
                 if (ProfileImage != null && ProfileImage.Length > 0)
                 {
-                    var uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "images/profile");
+                    var uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "image/profile");
                     Directory.CreateDirectory(uploadsFolder); 
 
                     var uniqueFileName = Guid.NewGuid().ToString() + Path.GetExtension(ProfileImage.FileName);
@@ -237,9 +238,11 @@ namespace GP.Controllers
         public async Task<IActionResult> MyAccount()
         {
             var user = await userManager.GetUserAsync(User);
-            if (user == null) return RedirectToAction("Login", "Account");
 
-            var viewModel = new MyAccountViewModel
+            if (user == null)
+                return RedirectToAction("Login", "Account");
+
+            var model = new MyAccountViewModel
             {
                 FirstName = user.FirstName,
                 LastName = user.LastName,
@@ -248,8 +251,48 @@ namespace GP.Controllers
                 ProfileImageUrl = user.ProfileImageUrl
             };
 
-            return View(viewModel);
+            return View(model);
         }
+
+
+        [HttpPost]
+        public async Task<IActionResult> MyAccount(MyAccountViewModel model, IFormFile? ProfileImage)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await userManager.GetUserAsync(User);
+                if (user != null)
+                {
+                    user.FirstName = model.FirstName;
+                    user.LastName = model.LastName;
+                    user.PhoneNumber = model.Phone;
+
+                    if (ProfileImage != null)
+                    {
+                        var fileName = Guid.NewGuid().ToString() + Path.GetExtension(ProfileImage.FileName);
+                        var filePath = Path.Combine(_webHostEnvironment.WebRootPath, "image/profile", fileName);
+
+                        using (var stream = new FileStream(filePath, FileMode.Create))
+                        {
+                            await ProfileImage.CopyToAsync(stream);
+                        }
+
+                        user.ProfileImageUrl = "/image/profile/" + fileName;
+                    }
+
+                    var result = await userManager.UpdateAsync(user);
+                    if (result.Succeeded)
+                    {
+                        return RedirectToAction("MyAccount");
+                    }
+                }
+            }
+
+            return View(model);
+        }
+
+
+
     }
 
 
